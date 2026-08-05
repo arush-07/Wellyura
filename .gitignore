@@ -1,0 +1,38 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+frontend/.env.local
+backend/.env
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+
+# Backend
+backend/.venv/
+backend/venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# Private legacy database exports
+backend/database/supabase/import/
+**/users_rows.csv
+**/favorites_rows.csv
+**/search_history_rows.csv
+**/contact_messages_rows.csv
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Archives and temporary files
+*.zip
+*.log

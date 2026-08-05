@@ -1,0 +1,52 @@
+{
+  "summary": {
+    "universities": 268,
+    "programmes": 4102,
+    "countries": 12
+  },
+  "universities": {
+    "missing_website": 22,
+    "missing_city": 3,
+    "missing_fee_range": 68,
+    "without_scholarship_notes": 41,
+    "by_country": {
+      "Australia": 20,
+      "Canada": 20,
+      "France": 20,
+      "Germany": 20,
+      "Ireland": 19,
+      "Netherlands": 20,
+      "New Zealand": 19,
+      "Russia": 19,
+      "Singapore": 22,
+      "South Korea": 20,
+      "UK": 20,
+      "USA": 49
+    }
+  },
+  "programmes": {
+    "missing_annual_fee": 2392,
+    "missing_duration": 52,
+    "missing_requirements": 2208,
+    "by_subject": {
+      "Health & Medicine": 189,
+      "Business & Management": 1212,
+      "Engineering": 657,
+      "Computer Science & AI": 931,
+      "Science & Mathematics": 403,
+      "Other": 438,
+      "Arts & Humanities": 124,
+      "Social Sciences": 74,
+      "Law & Public Policy": 74
+    },
+    "by_level": {
+      "Undergraduate": 1965,
+      "Postgraduate": 2137
+    }
+  },
+  "rules": [
+    "Zero-valued fees are treated as missing, never as free tuition.",
+    "All legacy values remain unverified until linked to a primary source and effective date.",
+    "University and programme names should be deduplicated through official domains and human review."
+  ]
+}
