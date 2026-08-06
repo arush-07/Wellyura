@@ -1,33 +1,289 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight, Database, FileWarning, History, ShieldCheck } from "lucide-react";
-import { countries, programmes, universities } from "@/lib/catalog";
+﻿import type {
+  Metadata,
+} from "next";
 
-export const metadata: Metadata = { title: "Admin workspace", robots: { index: false, follow: false } };
+import {
+  BellRing,
+  Building2,
+  GitCompareArrows,
+  GraduationCap,
+  Heart,
+  Home,
+  Search,
+  Star,
+  Users,
+} from "lucide-react";
 
-const queue = [
-  ["Tuition records with zero values", programmes.filter((item) => !item.annualFeeCad).length, "Needs review"],
-  ["Institutions imported from v1", universities.length, "Migration"],
-  ["Country datasets", countries.length, "Ready"],
-  ["Programme records", programmes.length, "Staged"],
-] as const;
+import {
+  redirect,
+} from "next/navigation";
 
-export default function AdminPage() {
+import {
+  AdminAnnouncementsPanel,
+} from "@/components/admin-announcements-panel";
+
+import {
+  AdminHousingPanel,
+} from "@/components/admin-housing-panel";
+
+import {
+  AdminReviewsPanel,
+} from "@/components/admin-reviews-panel";
+
+import {
+  AdminUsersPanel,
+} from "@/components/admin-users-panel";
+
+import type {
+  AdminAnnouncementRow,
+  AdminHousingInquiryRow,
+  AdminMetrics,
+  AdminReviewRow,
+  AdminUserRow,
+} from "@/lib/admin-types";
+
+import {
+  createClient,
+} from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "Admin workspace",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export const dynamic = "force-dynamic";
+
+const defaultMetrics: AdminMetrics = {
+  users: 0,
+  profiles: 0,
+  universities: 0,
+  programmes: 0,
+  accommodations: 0,
+  saved_universities: 0,
+  comparisons: 0,
+  searches: 0,
+  reviews: 0,
+  pending_housing_inquiries: 0,
+  pending_notifications: 0,
+};
+
+export default async function AdminPage() {
+  const supabase = await createClient();
+
+  const {
+    data: {
+      user,
+    },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login?next=/admin");
+  }
+
+  const {
+    data: roleRows,
+    error: roleError,
+  } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", user.id);
+
+  if (roleError) {
+    throw new Error(roleError.message);
+  }
+
+  const isAdmin =
+    roleRows?.some(
+      (row) => row.role === "admin",
+    ) ?? false;
+
+  if (!isAdmin) {
+    redirect("/workspace");
+  }
+
+  const [
+    metricsResult,
+    usersResult,
+    inquiriesResult,
+    reviewsResult,
+    announcementsResult,
+  ] = await Promise.all([
+    supabase.rpc(
+      "get_admin_dashboard_metrics",
+    ),
+
+    supabase.rpc(
+      "admin_list_users",
+    ),
+
+    supabase.rpc(
+      "admin_list_housing_inquiries",
+    ),
+
+    supabase.rpc(
+      "admin_list_accommodation_reviews",
+    ),
+
+    supabase.rpc(
+      "admin_list_announcements",
+    ),
+  ]);
+
+  const firstError =
+    metricsResult.error ??
+    usersResult.error ??
+    inquiriesResult.error ??
+    reviewsResult.error ??
+    announcementsResult.error;
+
+  if (firstError) {
+    throw new Error(firstError.message);
+  }
+
+  const metrics: AdminMetrics = {
+    ...defaultMetrics,
+
+    ...(
+      metricsResult.data as
+        | Partial<AdminMetrics>
+        | null
+    ),
+  };
+
+  const users =
+    (usersResult.data ??
+      []) as unknown as AdminUserRow[];
+
+  const inquiries =
+    (inquiriesResult.data ??
+      []) as unknown as AdminHousingInquiryRow[];
+
+  const reviews =
+    (reviewsResult.data ??
+      []) as unknown as AdminReviewRow[];
+
+  const announcements =
+    (announcementsResult.data ??
+      []) as unknown as AdminAnnouncementRow[];
+
+  const metricCards = [
+    {
+      label: "Registered users",
+      value: metrics.users,
+      icon: Users,
+    },
+    {
+      label: "Universities",
+      value: metrics.universities,
+      icon: GraduationCap,
+    },
+    {
+      label: "Programmes",
+      value: metrics.programmes,
+      icon: Search,
+    },
+    {
+      label: "Accommodations",
+      value: metrics.accommodations,
+      icon: Building2,
+    },
+    {
+      label: "Saved universities",
+      value: metrics.saved_universities,
+      icon: Heart,
+    },
+    {
+      label: "Comparisons",
+      value: metrics.comparisons,
+      icon: GitCompareArrows,
+    },
+    {
+      label: "Reviews",
+      value: metrics.reviews,
+      icon: Star,
+    },
+    {
+      label: "Pending inquiries",
+      value:
+        metrics.pending_housing_inquiries,
+      icon: Home,
+    },
+    {
+      label: "Pending notifications",
+      value:
+        metrics.pending_notifications,
+      icon: BellRing,
+    },
+  ] as const;
+
   return (
     <>
-      <section className="admin-hero"><div className="shell"><span className="eyebrow eyebrow-light">Editorial operations</span><h1>Control the data.<br />Protect the trust.</h1><p>The redesigned admin is a publication and data-quality workspace—not a raw table editor.</p></div></section>
-      <div className="shell admin-grid">
-        <article className="admin-metric"><Database size={20} /><span>Institutions</span><strong>{universities.length}</strong></article>
-        <article className="admin-metric"><ShieldCheck size={20} /><span>Verified records</span><strong>0</strong></article>
-        <article className="admin-metric"><FileWarning size={20} /><span>Fee gaps</span><strong>{programmes.filter((item) => !item.annualFeeCad).length}</strong></article>
-        <article className="admin-metric"><History size={20} /><span>Import batches</span><strong>12</strong></article>
-      </div>
-      <section className="shell admin-board">
-        <article className="admin-panel"><h2>Data quality queue</h2>{queue.map(([title, count, status]) => <div className="queue-row" key={title}><div><strong>{title}</strong><span>{count.toLocaleString()} records</span></div><em>{status}</em></div>)}</article>
-        <article className="admin-panel"><h2>Publishing workflow</h2><div className="queue-row"><div><strong>Draft</strong><span>New or edited records awaiting review</span></div><em>Editor</em></div><div className="queue-row"><div><strong>Review</strong><span>Source and field-level validation</span></div><em>Reviewer</em></div><div className="queue-row"><div><strong>Published</strong><span>Search-visible canonical records</span></div><em>Publisher</em></div><div className="queue-row"><div><strong>Revision history</strong><span>Rollback and complete audit trail</span></div><em>System</em></div></article>
-        <article className="admin-panel"><h2>Import centre</h2><p>Legacy seed files have been converted into a staged catalogue. The FastAPI import service and PostgreSQL staging tables are included in the new architecture.</p><Link className="button button-dark" href="/admin">Review migration plan <ArrowUpRight size={17} /></Link></article>
-        <article className="admin-panel"><h2>Access model</h2><p>Roles are separated into super admin, editor, reviewer, publisher, importer and read-only support. Authentication will connect through Supabase Auth.</p></article>
+      <section className="admin-hero">
+        <div className="shell">
+          <span className="eyebrow eyebrow-light">
+            Wellyura operations
+          </span>
+
+          <h1>
+            Control the data.
+            <br />
+            Protect the trust.
+          </h1>
+
+          <p>
+            Manage platform access, housing
+            inquiries, student reviews and
+            announcements from one secure
+            workspace.
+          </p>
+        </div>
       </section>
+
+      <section className="shell admin-live-metrics">
+        {metricCards.map((metric) => {
+          const Icon = metric.icon;
+
+          return (
+            <article
+              className="admin-live-metric"
+              key={metric.label}
+            >
+              <div className="admin-live-metric-icon">
+                <Icon size={19} />
+              </div>
+
+              <span>{metric.label}</span>
+
+              <strong>
+                {metric.value.toLocaleString()}
+              </strong>
+            </article>
+          );
+        })}
+      </section>
+
+      <main className="shell admin-live-dashboard">
+        <AdminUsersPanel
+          initialUsers={users}
+        />
+
+        <AdminHousingPanel
+          initialInquiries={inquiries}
+        />
+
+        <AdminReviewsPanel
+          initialReviews={reviews}
+        />
+
+        <AdminAnnouncementsPanel
+          initialAnnouncements={
+            announcements
+          }
+        />
+      </main>
     </>
   );
 }

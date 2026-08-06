@@ -2399,3 +2399,583 @@ main { min-height: 70vh; overflow: clip; }
     gap: 9px;
   }
 }
+
+/* =========================================================
+   LIVE ADMIN DASHBOARD
+   ========================================================= */
+
+.admin-live-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: -48px;
+  position: relative;
+  z-index: 2;
+}
+
+.admin-live-metric {
+  min-height: 145px;
+  padding: 24px;
+  border: 1px solid rgba(23, 41, 37, 0.1);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(23, 41, 37, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.admin-live-metric-icon {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: #edf5f1;
+  color: #173b31;
+  display: grid;
+  place-items: center;
+}
+
+.admin-live-metric span {
+  color: #64736e;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.admin-live-metric strong {
+  margin-top: 6px;
+  color: #173b31;
+  font-size: clamp(1.75rem, 3vw, 2.45rem);
+  line-height: 1;
+}
+
+.admin-live-dashboard {
+  display: grid;
+  gap: 28px;
+  padding-top: 48px;
+  padding-bottom: 90px;
+}
+
+.admin-live-panel {
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid rgba(23, 41, 37, 0.1);
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 20px 55px rgba(23, 41, 37, 0.06);
+}
+
+.admin-live-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.admin-live-panel-head h2 {
+  margin: 7px 0 8px;
+  color: #173b31;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.admin-live-panel-head p {
+  max-width: 660px;
+  margin: 0;
+  color: #64736e;
+  line-height: 1.7;
+}
+
+.admin-count-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: #edf5f1;
+  color: #173b31;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.admin-user-list,
+.admin-housing-list,
+.admin-review-list,
+.admin-announcement-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-user-card,
+.admin-housing-card,
+.admin-review-card,
+.admin-announcement-card {
+  padding: 22px;
+  border: 1px solid rgba(23, 41, 37, 0.1);
+  border-radius: 20px;
+  background: #fbfdfc;
+}
+
+.admin-user-card {
+  display: grid;
+  grid-template-columns:
+    minmax(210px, 1.1fr)
+    minmax(190px, 0.9fr)
+    minmax(340px, 1.6fr);
+  align-items: center;
+  gap: 22px;
+}
+
+.admin-user-identity {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.admin-user-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  background: #173b31;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.admin-user-identity div:last-child {
+  min-width: 0;
+}
+
+.admin-user-identity strong,
+.admin-user-identity span {
+  display: block;
+}
+
+.admin-user-identity strong {
+  color: #173b31;
+}
+
+.admin-user-identity span {
+  margin-top: 3px;
+  color: #71807b;
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-user-dates {
+  display: grid;
+  gap: 5px;
+  color: #71807b;
+  font-size: 0.78rem;
+}
+
+.admin-role-grid {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.admin-role-button {
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 1px solid rgba(23, 41, 37, 0.15);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #54635e;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.admin-role-button:hover:not(:disabled) {
+  border-color: #173b31;
+  color: #173b31;
+  transform: translateY(-1px);
+}
+
+.admin-role-button.active {
+  border-color: #173b31;
+  background: #173b31;
+  color: #ffffff;
+}
+
+.admin-role-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.admin-housing-heading,
+.admin-review-heading,
+.admin-announcement-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.admin-housing-heading h3,
+.admin-review-heading h3,
+.admin-announcement-card h3,
+.admin-form-heading h3,
+.admin-queue-card h3 {
+  margin: 5px 0 0;
+  color: #173b31;
+}
+
+.admin-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.admin-status-pending,
+.admin-status-draft {
+  background: #fff1cf;
+  color: #8c5c00;
+}
+
+.admin-status-contacted {
+  background: #e6f0ff;
+  color: #245a9e;
+}
+
+.admin-status-approved,
+.admin-status-confirmed,
+.admin-status-published {
+  background: #dff5e8;
+  color: #17623d;
+}
+
+.admin-status-rejected,
+.admin-status-cancelled {
+  background: #ffe5e5;
+  color: #9b2929;
+}
+
+.admin-housing-student {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 17px;
+}
+
+.admin-housing-student strong {
+  color: #173b31;
+}
+
+.admin-housing-student a {
+  color: #52635d;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+}
+
+.admin-housing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.admin-housing-meta span {
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #edf5f1;
+  color: #52635d;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.admin-housing-message {
+  margin: 17px 0;
+  color: #52635d;
+  line-height: 1.7;
+}
+
+.admin-housing-actions,
+.admin-review-footer,
+.admin-announcement-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.admin-housing-actions label {
+  width: min(270px, 100%);
+  color: #52635d;
+  display: grid;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.admin-housing-actions select,
+.admin-announcement-form select,
+.admin-announcement-form input,
+.admin-announcement-form textarea {
+  width: 100%;
+  border: 1px solid rgba(23, 41, 37, 0.16);
+  border-radius: 12px;
+  background: #ffffff;
+  color: #173b31;
+  font: inherit;
+  outline: none;
+}
+
+.admin-housing-actions select,
+.admin-announcement-form select,
+.admin-announcement-form input {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.admin-announcement-form textarea {
+  padding: 12px;
+  resize: vertical;
+}
+
+.admin-housing-actions select:focus,
+.admin-announcement-form select:focus,
+.admin-announcement-form input:focus,
+.admin-announcement-form textarea:focus {
+  border-color: #173b31;
+  box-shadow: 0 0 0 3px rgba(23, 59, 49, 0.1);
+}
+
+.admin-review-heading span:not(.admin-review-stars) {
+  display: block;
+  margin-top: 4px;
+  color: #71807b;
+  font-size: 0.82rem;
+}
+
+.admin-review-stars {
+  color: #e8a317;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.admin-review-card > p {
+  margin: 18px 0;
+  color: #52635d;
+  line-height: 1.7;
+}
+
+.admin-review-footer > span {
+  color: #71807b;
+  font-size: 0.78rem;
+}
+
+.admin-review-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-announcement-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 1.15fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.admin-announcement-form {
+  padding: 22px;
+  border-radius: 20px;
+  background: #edf5f1;
+  display: grid;
+  gap: 16px;
+}
+
+.admin-form-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.admin-form-heading > svg {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: #173b31;
+}
+
+.admin-form-heading p,
+.admin-queue-card p {
+  margin: 5px 0 0;
+  color: #64736e;
+  line-height: 1.6;
+  font-size: 0.86rem;
+}
+
+.admin-announcement-form > label,
+.admin-form-grid label {
+  color: #52635d;
+  display: grid;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.admin-checkbox-row {
+  grid-template-columns: auto 1fr !important;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.admin-checkbox-row input {
+  width: 17px;
+  min-height: 17px;
+  height: 17px;
+  accent-color: #173b31;
+}
+
+.admin-announcement-side {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-queue-card {
+  padding: 22px;
+  border-radius: 20px;
+  background: #173b31;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 13px;
+}
+
+.admin-queue-card h3 {
+  color: #ffffff;
+}
+
+.admin-queue-card p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.admin-queue-card .button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.admin-announcement-card > p {
+  margin: 16px 0;
+  color: #52635d;
+  line-height: 1.7;
+}
+
+.admin-announcement-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 17px;
+  color: #71807b;
+  font-size: 0.78rem;
+}
+
+.admin-announcement-actions {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.button-small {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 1100px) {
+  .admin-live-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-user-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-role-grid {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .admin-announcement-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-live-metrics {
+    grid-template-columns: 1fr;
+    margin-top: -32px;
+  }
+
+  .admin-live-metric {
+    min-height: 125px;
+  }
+
+  .admin-live-panel-head,
+  .admin-housing-heading,
+  .admin-review-heading,
+  .admin-announcement-card-head,
+  .admin-housing-actions,
+  .admin-review-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-count-pill {
+    align-self: flex-start;
+  }
+
+  .admin-user-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-role-grid {
+    grid-column: auto;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-housing-actions label {
+    width: 100%;
+  }
+
+  .admin-review-actions {
+    width: 100%;
+  }
+}
