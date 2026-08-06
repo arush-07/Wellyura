@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import ssl
-
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -56,7 +54,7 @@ def create_database_engine() -> AsyncEngine:
 
     if settings.env.lower() == "production" or is_supabase:
         engine_options["connect_args"] = {
-            "ssl": ssl.create_default_context(),
+            "ssl": "require",
         }
 
     return create_async_engine(
