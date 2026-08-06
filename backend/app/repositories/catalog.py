@@ -272,24 +272,14 @@ class PostgresCatalogRepository:
               (
                 select count(
                   distinct lower(
-                    coalesce(
-                      nullif(
-                        legacy_payload ->> 'subject',
-                        ''
-                      ),
-                      nullif(faculty, '')
+                    nullif(
+                      legacy_payload ->> 'subject',
+                      ''
                     )
                   )
                 )
                 from public.programmes
                 where publication_status = 'published'
-                  and coalesce(
-                    nullif(
-                      legacy_payload ->> 'subject',
-                      ''
-                    ),
-                    nullif(faculty, '')
-                  ) is not null
               )::integer as subjects
             """
         )
