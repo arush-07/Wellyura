@@ -46,3 +46,18 @@ def test_preserves_plain_and_invalid_strings() -> None:
     assert normalized["name"] == "Example Programme"
     assert normalized["duration"] == "2"
     assert normalized["features"] == "not-valid-json"
+
+
+def test_converts_legacy_null_strings() -> None:
+    item = {
+        "abbreviation": "null",
+        "contacts": '{"email":"null","phone":"+91-123"}',
+    }
+
+    normalized = normalize_catalog_item(item)
+
+    assert normalized["abbreviation"] is None
+    assert normalized["contacts"] == {
+        "email": None,
+        "phone": "+91-123",
+    }

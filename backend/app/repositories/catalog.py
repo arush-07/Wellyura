@@ -52,6 +52,27 @@ def _decode_json_string(value: Any) -> Any:
     return current
 
 
+def _normalize_legacy_placeholders(value: Any) -> Any:
+    """Convert legacy literal null strings into real JSON null values."""
+
+    if isinstance(value, str) and value.strip().lower() == "null":
+        return None
+
+    if isinstance(value, list):
+        return [
+            _normalize_legacy_placeholders(item)
+            for item in value
+        ]
+
+    if isinstance(value, dict):
+        return {
+            key: _normalize_legacy_placeholders(item)
+            for key, item in value.items()
+        }
+
+    return value
+
+
 def normalize_catalog_item(item: dict[str, Any]) -> dict[str, Any]:
     normalized = dict(item)
 
@@ -61,7 +82,10 @@ def normalize_catalog_item(item: dict[str, Any]) -> dict[str, Any]:
                 normalized[field],
             )
 
-    return normalized
+    return {
+        key: _normalize_legacy_placeholders(value)
+        for key, value in normalized.items()
+    }
 
 
 class CatalogRepository(Protocol):
