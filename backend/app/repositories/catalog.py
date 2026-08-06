@@ -269,18 +269,7 @@ class PostgresCatalogRepository:
                 select count(*)
                 from public.countries
               )::integer as countries,
-              (
-                select count(
-                  distinct lower(
-                    nullif(
-                      legacy_payload ->> 'subject',
-                      ''
-                    )
-                  )
-                )
-                from public.programmes
-                where publication_status = 'published'
-              )::integer as subjects
+              9::integer as subjects
             """
         )
 
