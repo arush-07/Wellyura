@@ -16,7 +16,7 @@ const links = [
   ["Overview", "/workspace", LayoutDashboard],
   ["Saved", "/workspace/saved", BookMarked],
   ["Comparisons", "/compare", GitCompareArrows],
-  ["Searches", "/discover", Search],
+  ["Searches", "/workspace/searches", Search],
   ["Deadlines", "/workspace/deadlines", CalendarDays],
   ["Profile", "/workspace/profile", UserRound],
   ["Alerts", "/workspace/alerts", Bell],
@@ -45,4 +45,5 @@ export function WorkspaceNav() {
     </aside>
   );
 }
+
 
