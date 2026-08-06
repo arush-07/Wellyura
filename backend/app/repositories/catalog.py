@@ -9,6 +9,61 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
+JSON_ENCODED_FIELDS = frozenset(
+    {
+        "campuses",
+        "contacts",
+        "intakes",
+        "deadlines",
+        "eligibility",
+        "internships",
+        "campus_life",
+        "security",
+        "scholarships",
+        "top_ug_programs",
+        "top_pg_programs",
+        "features",
+        "entry_roles",
+        "required_subjects",
+        "specialization",
+    }
+)
+
+
+def _decode_json_string(value: Any) -> Any:
+    """Decode JSON arrays or objects stored inside legacy text fields."""
+
+    current = value
+
+    for _ in range(2):
+        if not isinstance(current, str):
+            break
+
+        candidate = current.strip()
+
+        if not candidate or candidate[0] not in "[{":
+            break
+
+        try:
+            current = json.loads(candidate)
+        except json.JSONDecodeError:
+            break
+
+    return current
+
+
+def normalize_catalog_item(item: dict[str, Any]) -> dict[str, Any]:
+    normalized = dict(item)
+
+    for field in JSON_ENCODED_FIELDS:
+        if field in normalized:
+            normalized[field] = _decode_json_string(
+                normalized[field],
+            )
+
+    return normalized
+
+
 class CatalogRepository(Protocol):
     async def summary(self) -> dict[str, Any]: ...
     async def list_countries(self) -> list[dict[str, Any]]: ...
@@ -432,7 +487,7 @@ class PostgresCatalogRepository:
         )
 
         rows = [
-            dict(row["item"])
+            normalize_catalog_item(dict(row["item"]))
             for row in rows_result.mappings().all()
         ]
 
@@ -486,7 +541,7 @@ class PostgresCatalogRepository:
         if not row:
             return None
 
-        return dict(row["item"])
+        return normalize_catalog_item(dict(row["item"]))
 
     async def list_programmes(
         self,
@@ -645,7 +700,7 @@ class PostgresCatalogRepository:
         )
 
         rows = [
-            dict(row["item"])
+            normalize_catalog_item(dict(row["item"]))
             for row in rows_result.mappings().all()
         ]
 
@@ -713,4 +768,4 @@ class PostgresCatalogRepository:
         if not row:
             return None
 
-        return dict(row["item"])
+        return normalize_catalog_item(dict(row["item"]))
