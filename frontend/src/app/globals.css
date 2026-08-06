@@ -2109,3 +2109,293 @@ main { min-height: 70vh; overflow: clip; }
     justify-content: flex-end;
   }
 }
+
+/* Accommodation workflow forms */
+
+.accommodation-actions {
+  display: grid;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.accommodation-request-card {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.accommodation-request-card h3 {
+  margin: 0;
+}
+
+.accommodation-request-card > p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.accommodation-form {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.accommodation-form label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.accommodation-form input,
+.accommodation-form select,
+.accommodation-form textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 12px 13px;
+  font: inherit;
+  font-weight: 400;
+  outline: none;
+}
+
+.accommodation-form input[type="date"] {
+  min-height: 46px;
+}
+
+.accommodation-form textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.accommodation-form input:focus,
+.accommodation-form select:focus,
+.accommodation-form textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(57, 103, 255, 0.12);
+}
+
+.accommodation-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.accommodation-form .button {
+  justify-self: start;
+}
+
+.accommodation-review-section {
+  margin-top: 0;
+}
+
+.accommodation-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.accommodation-section-heading h2 {
+  margin: 5px 0 7px;
+}
+
+.accommodation-section-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.review-count-pill {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.accommodation-review-form {
+  margin: 20px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-soft);
+}
+
+.accommodation-review-list {
+  display: grid;
+  gap: 12px;
+}
+
+.accommodation-review-card {
+  padding: 17px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.accommodation-review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.accommodation-review-top strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.review-stars {
+  display: block;
+  color: #f2a900;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.accommodation-review-card p {
+  margin: 13px 0 8px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.review-date {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+/* Keep Next.js accommodation images proportioned correctly. */
+.stay-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 680px) {
+  .accommodation-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .accommodation-section-heading {
+    flex-direction: column;
+  }
+
+  .accommodation-form .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Housing inquiry cards */
+
+.housing-inquiry-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.housing-inquiry-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+}
+
+.housing-inquiry-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.housing-inquiry-heading h3 {
+  margin: 6px 0 0;
+  font-size: 1.15rem;
+}
+
+.housing-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  border-radius: 999px;
+  background: rgba(242, 169, 0, 0.14);
+  color: #9a6800;
+  padding: 7px 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.housing-inquiry-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.housing-inquiry-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.housing-inquiry-card > p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.housing-inquiry-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.housing-inquiry-footer .arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.housing-inquiry-footer .arrow-link:hover {
+  color: var(--blue);
+}
+
+@media (max-width: 680px) {
+  .housing-inquiry-heading,
+  .housing-inquiry-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .housing-inquiry-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+  }
+}
