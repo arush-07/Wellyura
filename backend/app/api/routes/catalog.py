@@ -13,12 +13,12 @@ router = APIRouter(tags=["Catalogue"])
 
 @router.get("/catalog/summary", response_model=CatalogSummary)
 async def catalog_summary(service: CatalogService = Depends(get_catalog_service)):
-    return service.summary()
+    return await service.summary()
 
 
 @router.get("/countries")
 async def list_countries(service: CatalogService = Depends(get_catalog_service)) -> list[dict[str, Any]]:
-    return service.countries()
+    return await service.countries()
 
 
 @router.get("/universities", response_model=PaginatedResponse)
@@ -30,13 +30,13 @@ async def list_universities(
     offset: int = Query(0, ge=0),
     service: CatalogService = Depends(get_catalog_service),
 ):
-    data, total = service.universities(query=q, country=country, scholarship=scholarship, limit=limit, offset=offset)
+    data, total = await service.universities(query=q, country=country, scholarship=scholarship, limit=limit, offset=offset)
     return PaginatedResponse(data=data, meta=PaginationMeta(total=total, limit=limit, offset=offset))
 
 
 @router.get("/universities/{slug}")
 async def get_university(slug: str, service: CatalogService = Depends(get_catalog_service)):
-    return service.university(slug)
+    return await service.university(slug)
 
 
 @router.get("/programmes", response_model=PaginatedResponse)
@@ -50,13 +50,13 @@ async def list_programmes(
     offset: int = Query(0, ge=0),
     service: CatalogService = Depends(get_catalog_service),
 ):
-    data, total = service.programmes(query=q, country=country, subject=subject, level=level, university_slug=university, limit=limit, offset=offset)
+    data, total = await service.programmes(query=q, country=country, subject=subject, level=level, university_slug=university, limit=limit, offset=offset)
     return PaginatedResponse(data=data, meta=PaginationMeta(total=total, limit=limit, offset=offset))
 
 
 @router.get("/programmes/{slug}")
 async def get_programme(slug: str, service: CatalogService = Depends(get_catalog_service)):
-    return service.programme(slug)
+    return await service.programme(slug)
 
 
 @router.get("/search", response_model=SearchResponse)
@@ -65,4 +65,4 @@ async def search(
     limit: int = Query(8, ge=1, le=20),
     service: CatalogService = Depends(get_catalog_service),
 ):
-    return service.search(q, limit)
+    return await service.search(q, limit)
