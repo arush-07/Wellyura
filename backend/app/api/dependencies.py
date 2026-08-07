@@ -12,6 +12,9 @@ from app.repositories.catalog import (
     PostgresCatalogRepository,
 )
 from app.services.catalog import CatalogService
+from app.repositories.profile import ProfileRepository
+from app.services.profile import ProfileService
+
 
 
 @lru_cache
@@ -37,3 +40,14 @@ async def get_catalog_service(
         session,
     )
     return CatalogService(repository)
+
+
+
+async def get_profile_service(
+    session: AsyncSession = Depends(
+        get_db_session,
+    ),
+) -> ProfileService:
+    return ProfileService(
+        ProfileRepository(session),
+    )
