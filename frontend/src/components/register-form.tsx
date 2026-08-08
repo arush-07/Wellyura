@@ -1,162 +1,419 @@
-"use client";
+﻿"use client";
 
-import { FormEvent, useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { countries } from "@/lib/catalog";
 import { createClient } from "@/lib/supabase/client";
 
 export function RegisterForm() {
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const [fullName, setFullName] =
+    useState("");
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const fullName = String(formData.get("name") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim();
-    const country = String(formData.get("country") ?? "").trim();
-    const password = String(formData.get("password") ?? "");
+  const [email, setEmail] =
+    useState("");
 
+  const [destination, setDestination] =
+    useState("");
+
+  const [otp, setOtp] =
+    useState("");
+
+  const [otpSent, setOtpSent] =
+    useState(false);
+
+  const [resendSeconds, setResendSeconds] =
+    useState(0);
+
+  const [message, setMessage] =
+    useState("");
+
+  const [isError, setIsError] =
+    useState(false);
+
+  const [loading, setLoading] =
+    useState(false);
+
+  useEffect(() => {
+    if (resendSeconds <= 0) {
+      return;
+    }
+
+    const timer = window.setTimeout(
+      () => {
+        setResendSeconds(
+          (seconds) =>
+            Math.max(0, seconds - 1),
+        );
+      },
+      1000,
+    );
+
+    return () =>
+      window.clearTimeout(timer);
+  }, [resendSeconds]);
+
+  function resetMessage() {
     setMessage("");
     setIsError(false);
+  }
 
-    if (!fullName || !email || password.length < 8) {
-      setIsError(true);
-      setMessage("Enter your name, email and a password of at least 8 characters.");
-      return;
+  function showError(text: string) {
+    setIsError(true);
+    setMessage(text);
+  }
+
+  function showSuccess(text: string) {
+    setIsError(false);
+    setMessage(text);
+  }
+
+  async function sendOtp() {
+    const cleanName =
+      fullName.trim();
+
+    const cleanEmail =
+      email.trim().toLowerCase();
+
+    if (!cleanName) {
+      throw new Error(
+        "Enter your full name.",
+      );
     }
 
-    setLoading(true);
+    if (!cleanEmail) {
+      throw new Error(
+        "Enter your email address.",
+      );
+    }
 
-    const supabase = createClient();
+    const supabase =
+      createClient();
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-        data: {
-          full_name: fullName,
-          destination_interest: country || null,
+    const { error } =
+      await supabase.auth.signInWithOtp({
+        email: cleanEmail,
+        options: {
+          shouldCreateUser: true,
+          data: {
+            full_name: cleanName,
+            destination_interest:
+              destination || null,
+          },
         },
-      },
-    });
-
-    setLoading(false);
+      });
 
     if (error) {
-      setIsError(true);
-      setMessage(error.message);
+      throw error;
+    }
+
+    setEmail(cleanEmail);
+    setOtpSent(true);
+    setOtp("");
+    setResendSeconds(30);
+
+    showSuccess(
+      "We sent a verification code to your email.",
+    );
+  }
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>,
+  ) {
+    event.preventDefault();
+
+    resetMessage();
+    setLoading(true);
+
+    try {
+      await sendOtp();
+    } catch (error) {
+      showError(
+        error instanceof Error
+          ? error.message
+          : "Unable to send verification code.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleResendOtp() {
+    if (resendSeconds > 0) {
       return;
     }
 
-    if (data.session) {
-      window.location.href = "/";
+    resetMessage();
+    setLoading(true);
+
+    try {
+      await sendOtp();
+
+      showSuccess(
+        "A new verification code was sent to your email.",
+      );
+    } catch (error) {
+      showError(
+        error instanceof Error
+          ? error.message
+          : "Unable to resend verification code.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleVerifyOtp() {
+    const cleanOtp =
+      otp.trim();
+
+    if (!/^\d{6}$/.test(cleanOtp)) {
+      showError(
+        "Enter the 6-digit verification code.",
+      );
       return;
     }
 
-    setMessage("Account created. Check your email to confirm your account.");
-    form.reset();
+    resetMessage();
+    setLoading(true);
+
+    try {
+      const supabase =
+        createClient();
+
+      const { error } =
+        await supabase.auth.verifyOtp({
+          email,
+          token: cleanOtp,
+          type: "email",
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      router.replace("/workspace");
+      router.refresh();
+    } catch (error) {
+      showError(
+        error instanceof Error
+          ? error.message
+          : "Unable to verify the code.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function changeDetails() {
+    setOtpSent(false);
+    setOtp("");
+    setResendSeconds(0);
+    resetMessage();
   }
 
   return (
     <form
-      className="auth-form auth-form-register"
+      className="auth-form"
       onSubmit={handleSubmit}
     >
-      <div className="auth-form-heading">
-        <span>Create account</span>
-        <h2>Start your Wellyura plan</h2>
-        <p>
-          Begin with the essentials. You can shape your study preferences
-          later.
-        </p>
-      </div>
+      <span className="eyebrow">
+        Create account
+      </span>
+
+      <h1>
+        Start your Wellyura plan
+      </h1>
+
+      <p>
+        Create your account using your
+        email address.
+      </p>
 
       <div className="form-stack">
         <div className="form-row">
-          <label htmlFor="name">Full name</label>
+          <label htmlFor="name">
+            Full name
+          </label>
+
           <input
             id="name"
-            name="name"
+            value={fullName}
+            onChange={(event) =>
+              setFullName(
+                event.target.value,
+              )
+            }
             autoComplete="name"
             placeholder="Your full name"
+            disabled={otpSent}
             required
           />
         </div>
 
         <div className="form-row">
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">
+            Email address
+          </label>
+
           <input
             id="email"
-            name="email"
             type="email"
+            value={email}
+            onChange={(event) =>
+              setEmail(
+                event.target.value,
+              )
+            }
             autoComplete="email"
             placeholder="you@example.com"
+            disabled={otpSent}
             required
           />
         </div>
 
         <div className="form-row">
-          <label htmlFor="country">Destination interest</label>
-          <select id="country" name="country" defaultValue="">
-            <option value="">Still exploring</option>
-            {countries.map((country) => (
-              <option value={country.slug} key={country.slug}>
-                {country.name}
-              </option>
-            ))}
+          <label htmlFor="country">
+            Destination interest
+          </label>
+
+          <select
+            id="country"
+            value={destination}
+            onChange={(event) =>
+              setDestination(
+                event.target.value,
+              )
+            }
+            disabled={otpSent}
+          >
+            <option value="">
+              Still exploring
+            </option>
+
+            {countries.map(
+              (country) => (
+                <option
+                  value={country.slug}
+                  key={country.slug}
+                >
+                  {country.name}
+                </option>
+              ),
+            )}
           </select>
         </div>
 
-        <div className="form-row">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            placeholder="At least 8 characters"
-            minLength={8}
-            required
-          />
-          <small className="field-hint">
-            Use at least 8 characters with a mix of letters and numbers.
-          </small>
-        </div>
+        {!otpSent ? (
+          <button
+            className="button button-dark auth-submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Sending code..."
+              : "Send verification code"}
+          </button>
+        ) : (
+          <>
+            <div className="form-row">
+              <label htmlFor="otp">
+                Verification code
+              </label>
+
+              <input
+                id="otp"
+                value={otp}
+                onChange={(event) =>
+                  setOtp(
+                    event.target.value
+                      .replace(/\D/g, "")
+                      .slice(0, 6),
+                  )
+                }
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                placeholder="6-digit code"
+                maxLength={6}
+              />
+            </div>
+
+            <button
+              className="button button-dark auth-submit"
+              type="button"
+              disabled={loading}
+              onClick={handleVerifyOtp}
+            >
+              {loading
+                ? "Verifying..."
+                : "Verify & create account"}
+            </button>
+
+            <button
+              className="button"
+              type="button"
+              disabled={
+                loading ||
+                resendSeconds > 0
+              }
+              onClick={handleResendOtp}
+            >
+              {resendSeconds > 0
+                ? `Resend code in ${resendSeconds}s`
+                : "Resend code"}
+            </button>
+
+            <button
+              className="button"
+              type="button"
+              disabled={loading}
+              onClick={changeDetails}
+            >
+              Change details
+            </button>
+          </>
+        )}
 
         {message && (
           <p
             aria-live="polite"
             style={{
-              color: isError ? "#b42318" : "#067647",
+              color: isError
+                ? "#b42318"
+                : "#067647",
               fontWeight: 600,
             }}
           >
             {message}
           </p>
         )}
-
-        <button
-          className="button button-dark auth-submit"
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? "Creating account..." : "Create account"}
-        </button>
       </div>
 
       <p className="auth-terms">
-        By creating an account, you agree to Wellyura&apos;s{" "}
-        <Link href="/terms">Terms</Link> and{" "}
-        <Link href="/privacy">Privacy Policy</Link>.
+        By creating an account, you agree
+        to Wellyura&apos;s{" "}
+        <Link href="/terms">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy">
+          Privacy Policy
+        </Link>
+        .
       </p>
 
       <p className="auth-switch">
-        Already registered? <Link href="/login">Sign in</Link>
+        Already registered?{" "}
+        <Link href="/login">
+          Sign in
+        </Link>
       </p>
     </form>
   );
