@@ -3415,3 +3415,89 @@ a[href="https://wellyura.com/scholarships"] {
     font-size: clamp(2.8rem, 13vw, 4.8rem) !important;
   }
 }
+
+/* Final hero size reduction + cleaner accommodation visual */
+.page-hero h1 {
+  font-size: clamp(2.75rem, 5.2vw, 4.8rem) !important;
+  line-height: .96 !important;
+  letter-spacing: -.06em !important;
+  max-width: 760px !important;
+}
+
+.entity-heading h1 {
+  font-size: clamp(2.9rem, 5.6vw, 4.9rem) !important;
+  line-height: .96 !important;
+  letter-spacing: -.06em !important;
+  max-width: 680px !important;
+}
+
+.entity-heading {
+  min-height: 300px !important;
+  padding-right: min(38vw, 430px) !important;
+}
+
+/* Remove the WELLYURA STAY text visual */
+.entity-heading::before {
+  content: "" !important;
+  position: absolute !important;
+  right: clamp(70px, 10vw, 150px) !important;
+  top: 48% !important;
+  width: min(170px, 16vw) !important;
+  aspect-ratio: 1 !important;
+  transform: translateY(-50%) rotate(12deg) !important;
+  border-radius: 999px !important;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255,255,255,.92), rgba(255,255,255,.14) 28%, transparent 58%),
+    linear-gradient(135deg, rgba(197, 245, 84, .95), rgba(70, 96, 255, .85)) !important;
+  box-shadow:
+    -34px 46px 0 rgba(255, 98, 67, .9),
+    38px -34px 0 rgba(197, 245, 84, .75),
+    0 24px 80px rgba(39, 70, 255, .24) !important;
+  z-index: 2 !important;
+}
+
+/* Replace the old card with a modern abstract glass shape */
+.entity-heading::after {
+  content: "" !important;
+  position: absolute !important;
+  right: clamp(28px, 6vw, 86px) !important;
+  top: 50% !important;
+  width: min(340px, 30vw) !important;
+  aspect-ratio: 1.15 !important;
+  transform: translateY(-50%) rotate(-4deg) !important;
+  border-radius: 38px !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.62), rgba(255,255,255,.12)),
+    radial-gradient(circle at 25% 25%, rgba(70, 96, 255, .42), transparent 38%),
+    radial-gradient(circle at 78% 70%, rgba(197, 245, 84, .46), transparent 36%) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow:
+    0 24px 80px rgba(4, 8, 28, .12),
+    inset 0 0 0 1px rgba(255,255,255,.34) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  z-index: 1 !important;
+}
+
+/* Reduce accommodation hero copy width */
+.entity-heading p {
+  max-width: 620px;
+}
+
+/* Keep mobile clean */
+@media (max-width: 900px) {
+  .page-hero h1,
+  .entity-heading h1 {
+    font-size: clamp(2.35rem, 10vw, 3.7rem) !important;
+  }
+
+  .entity-heading {
+    min-height: auto !important;
+    padding-right: 0 !important;
+  }
+
+  .entity-heading::before,
+  .entity-heading::after {
+    display: none !important;
+  }
+}
