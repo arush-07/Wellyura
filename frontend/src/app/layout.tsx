@@ -1,3 +1,4 @@
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppChrome } from "@/components/app-chrome";
@@ -30,7 +31,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
-        <AppChrome>{children}</AppChrome>
+        <AppChrome>{children}
+          <CookieConsentBanner /></AppChrome>
       </body>
     </html>
   );
