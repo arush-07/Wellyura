@@ -3501,3 +3501,50 @@ a[href="https://wellyura.com/scholarships"] {
     display: none !important;
   }
 }
+
+/* Replace accommodation abstract visual with familiar home element */
+.entity-heading::after {
+  content: "" !important;
+  position: absolute !important;
+  right: clamp(28px, 6vw, 86px) !important;
+  top: 50% !important;
+  width: min(340px, 30vw) !important;
+  aspect-ratio: 1.15 !important;
+  transform: translateY(-50%) rotate(-3deg) !important;
+  border-radius: 38px !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.35)),
+    radial-gradient(circle at 75% 25%, rgba(197, 245, 84, .42), transparent 34%),
+    radial-gradient(circle at 18% 82%, rgba(255, 98, 67, .28), transparent 36%) !important;
+  border: 1px solid rgba(255,255,255,.75) !important;
+  box-shadow:
+    22px 22px 0 rgba(197, 245, 84, .58),
+    0 24px 80px rgba(4, 8, 28, .12),
+    inset 0 0 0 1px rgba(255,255,255,.42) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  z-index: 1 !important;
+}
+
+.entity-heading::before {
+  content: "" !important;
+  position: absolute !important;
+  right: clamp(82px, 10vw, 160px) !important;
+  top: 50% !important;
+  width: min(190px, 17vw) !important;
+  aspect-ratio: 1 !important;
+  transform: translateY(-50%) rotate(-3deg) !important;
+  z-index: 2 !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='220' height='220' viewBox='0 0 220 220' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M44 104L110 50L176 104' stroke='%23070B24' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M64 100V166C64 174.837 71.1634 182 80 182H140C148.837 182 156 174.837 156 166V100' fill='%234660FF'/%3E%3Cpath d='M64 100V166C64 174.837 71.1634 182 80 182H140C148.837 182 156 174.837 156 166V100' stroke='%23070B24' stroke-width='14' stroke-linejoin='round'/%3E%3Cpath d='M96 182V136C96 128.268 102.268 122 110 122C117.732 122 124 128.268 124 136V182' fill='%23C5F554' stroke='%23070B24' stroke-width='12'/%3E%3Ccircle cx='143' cy='137' r='8' fill='%23FF6243'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 900px) {
+  .entity-heading::before,
+  .entity-heading::after {
+    display: none !important;
+  }
+}
