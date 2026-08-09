@@ -9,7 +9,6 @@ const columns = [
       ["Universities", "/universities"],
       ["Programmes", "/programmes"],
       ["Countries", "/countries"],
-      ["Scholarships", "/scholarships"],
       ["Accommodation", "/accommodation"],
     ],
   },

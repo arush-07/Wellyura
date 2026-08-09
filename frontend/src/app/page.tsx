@@ -59,9 +59,9 @@ export default function HomePage() {
             <div className="atlas-orbit atlas-orbit-one" />
             <div className="atlas-orbit atlas-orbit-two" />
             <div className="atlas-globe">
-              <span className="atlas-coordinate">51.5072° N</span>
+              <span className="atlas-coordinate">51.5072Â° N</span>
               <strong>YOUR<br />NEXT<br />PLACE</strong>
-              <span className="atlas-coordinate atlas-coordinate-bottom">0.1276° W</span>
+              <span className="atlas-coordinate atlas-coordinate-bottom">0.1276Â° W</span>
             </div>
             <div className="floating-card floating-card-one">
               <CountryFlag code="GB" name="United Kingdom" className="floating-flag" /><div><strong>United Kingdom</strong><small>20 institutions</small></div>
@@ -75,12 +75,12 @@ export default function HomePage() {
             <div className="atlas-stamp">W / 26</div>
           </div>
         </div>
-        <div className="hero-marquee" aria-label="Explore universities, programmes, scholarships, accommodation, comparison and planning">
+        <div className="hero-marquee" aria-label="Explore universities, programmes, accommodation, comparison and planning">
           <div className="hero-marquee-track" aria-hidden="true">
             {[0, 1].map((group) => (
               <div className="hero-marquee-group" key={group}>
                 {[0, 1].flatMap((cycle) =>
-                  ['Universities', 'Programmes', 'Scholarships', 'Accommodation', 'Compare', 'Plan'].map((item) => (
+                  ['Universities', 'Programmes', 'Accommodation', 'Compare', 'Plan'].map((item) => (
                     <span key={`${group}-${cycle}-${item}`}>{item}</span>
                   )),
                 )}
@@ -138,7 +138,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="University signals"
           title="Start with institutions worth opening."
-          description="A first look at catalogue breadth, programme availability and funding notes—not an unexplained ranking score."
+          description="A first look at catalogue breadth, programme availability and funding notesâ€”not an unexplained ranking score."
           href="/universities"
         />
         <div className="university-grid">
@@ -150,7 +150,7 @@ export default function HomePage() {
         <div className="shell">
           <SectionHeading
             eyebrow="Programme-first discovery"
-            title="Because students study programmes—not logos."
+            title="Because students study programmesâ€”not logos."
             description="Explore the course, level, location, requirements and fee context before choosing the institution around it."
             href="/programmes"
           />
@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="shell ecosystem-grid">
           <div className="ecosystem-copy">
             <span className="eyebrow eyebrow-light">Student-first. Partner-ready.</span>
-            <h2>Built for ambitious students—and the global ecosystem supporting them.</h2>
+            <h2>Built for ambitious studentsâ€”and the global ecosystem supporting them.</h2>
             <p>Wellyura keeps the experience fresh and approachable for students while giving universities and education partners a credible, structured place to be discovered.</p>
             <Link className="button button-lime" href="/contact">Connect with Wellyura <ArrowRight size={18} /></Link>
           </div>

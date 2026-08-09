@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/discover", "/universities", "/programmes", "/countries", "/scholarships", "/accommodation", "/compare", "/guides", "/faq", "/contact"];
+  const staticRoutes = ["", "/discover", "/universities", "/programmes", "/countries", "/accommodation", "/compare", "/guides", "/faq", "/contact"];
   return [
     ...staticRoutes.map((route) => ({ url: `${siteConfig.url}${route}`, lastModified: now, changeFrequency: "weekly" as const, priority: route === "" ? 1 : 0.7 })),
     ...countries.map((country) => ({ url: `${siteConfig.url}/countries/${country.slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 })),
