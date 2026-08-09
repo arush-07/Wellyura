@@ -3086,3 +3086,109 @@ main { min-height: 70vh; overflow: clip; }
     width: 100%;
   }
 }
+
+/* Accommodation login gate */
+.auth-gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4, 8, 28, .55);
+  backdrop-filter: blur(8px);
+}
+
+.auth-gate-card {
+  position: relative;
+  width: min(480px, 100%);
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 30px 90px rgba(4, 8, 28, .24);
+}
+
+.auth-gate-card h2 {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  letter-spacing: -.045em;
+  margin: 8px 0 12px;
+}
+
+.auth-gate-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: .92rem;
+}
+
+.auth-gate-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.auth-gate-actions .button {
+  width: 100%;
+}
+
+.auth-gate-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 560px) {
+  .auth-gate-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stronger full-page accommodation login popup */
+.auth-gate-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  z-index: 9999 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 20px !important;
+  background: rgba(4, 8, 28, .62) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  overflow: hidden !important;
+}
+
+.auth-gate-card {
+  position: relative !important;
+  width: min(520px, calc(100vw - 32px)) !important;
+  max-height: calc(100dvh - 40px) !important;
+  overflow-y: auto !important;
+  background: var(--white) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 24px !important;
+  padding: 30px !important;
+  box-shadow: 0 30px 100px rgba(4, 8, 28, .34) !important;
+}
+
+.auth-gate-card h2 {
+  max-width: 380px;
+}
+
+.auth-gate-actions {
+  margin-top: 24px;
+}
