@@ -3283,3 +3283,10 @@ main { min-height: 70vh; overflow: clip; }
     width: 100%;
   }
 }
+
+/* Temporarily hide Scholarships from public navigation */
+a[href="/scholarships"],
+a[href="https://www.wellyura.com/scholarships"],
+a[href="https://wellyura.com/scholarships"] {
+  display: none !important;
+}
