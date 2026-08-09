@@ -3290,3 +3290,45 @@ a[href="https://www.wellyura.com/scholarships"],
 a[href="https://wellyura.com/scholarships"] {
   display: none !important;
 }
+
+/* Header spacing refinement */
+.site-header .shell,
+.site-header .container,
+.site-header-inner,
+.header-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(28px, 4vw, 72px);
+}
+
+.site-header nav,
+.header-nav,
+.site-nav,
+.desktop-nav,
+.nav-links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 2.4vw, 42px);
+}
+
+.site-header nav a,
+.header-nav a,
+.site-nav a,
+.desktop-nav a,
+.nav-links a {
+  white-space: nowrap;
+}
+
+.site-header-actions,
+.header-actions,
+.auth-actions,
+.user-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.5vw, 24px);
+  white-space: nowrap;
+}
