@@ -3332,3 +3332,86 @@ a[href="https://wellyura.com/scholarships"] {
   gap: clamp(14px, 1.5vw, 24px);
   white-space: nowrap;
 }
+
+/* Page hero typography and detail visual refinement */
+.page-hero h1 {
+  font-size: clamp(3.4rem, 7vw, 6.4rem) !important;
+  line-height: .92 !important;
+  letter-spacing: -.07em !important;
+  max-width: 850px;
+}
+
+.entity-heading {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 330px;
+  padding-right: min(42vw, 460px);
+}
+
+.entity-heading > div:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.entity-heading h1 {
+  font-size: clamp(3.2rem, 6.6vw, 6rem) !important;
+  line-height: .92 !important;
+  letter-spacing: -.07em !important;
+  max-width: 760px;
+}
+
+.entity-heading::after {
+  content: "";
+  position: absolute;
+  right: clamp(24px, 6vw, 80px);
+  top: 50%;
+  width: min(360px, 30vw);
+  aspect-ratio: 1;
+  transform: translateY(-50%) rotate(-8deg);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, .35), transparent 22%),
+    linear-gradient(135deg, var(--blue), #2746ff 62%, #11183f);
+  box-shadow:
+    34px 34px 0 var(--lime),
+    0 28px 90px rgba(39, 70, 255, .22);
+  z-index: 1;
+}
+
+.entity-heading::before {
+  content: "Wellyura stay";
+  position: absolute;
+  right: clamp(46px, 8vw, 128px);
+  top: 50%;
+  transform: translateY(-50%) rotate(-8deg);
+  z-index: 2;
+  color: white;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.7vw, 2.8rem);
+  line-height: .9;
+  text-transform: uppercase;
+  letter-spacing: -.04em;
+  width: min-content;
+}
+
+.page-hero .shell {
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .entity-heading {
+    min-height: auto;
+    padding-right: 0;
+  }
+
+  .entity-heading::before,
+  .entity-heading::after {
+    display: none;
+  }
+
+  .page-hero h1,
+  .entity-heading h1 {
+    font-size: clamp(2.8rem, 13vw, 4.8rem) !important;
+  }
+}
