@@ -19,7 +19,7 @@ export default async function ProfilePage() {
 
   return (
     <section className="workspace-shell">
-      <div className="workspace-content">
+      <div className="container workspace-grid">
         <WorkspaceNav />
 
         <div className="workspace-main">
