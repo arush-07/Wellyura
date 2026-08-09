@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
 
 const globalBannerItems = Array.from(
   { length: 8 },
-  () => "Wellyura Global"
+  () => "Wellyura"
 );
 
 type SiteHeaderProps = {
@@ -171,7 +171,7 @@ export function SiteHeader({
     <header className="site-header">
       <div
         className="announcement-bar"
-        aria-label="Wellyura Global"
+        aria-label="Wellyura"
       >
         <div
           className="announcement-track"
@@ -352,3 +352,4 @@ export function SiteHeader({
     </header>
   );
 }
+
