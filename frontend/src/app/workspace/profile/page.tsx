@@ -1,49 +1,27 @@
 ﻿import type { Metadata } from "next";
-import { ProfileForm } from "@/components/profile-form";
+
+import { ProfileLoader } from "@/components/profile-loader";
 import { WorkspaceNav } from "@/components/workspace-nav";
-import { authenticatedServerApiFetch } from "@/lib/api/server";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Profile" };
-
-type ProfileResponse = {
-  id: string;
-  email: string | null;
-  full_name: string | null;
-  phone: string | null;
-  preferred_country_id: string | null;
+export const metadata: Metadata = {
+  title: "Profile",
 };
 
 export default async function ProfilePage() {
   const supabase = await createClient();
 
-  const [
-    profileResponse,
-    { data: countries },
-  ] = await Promise.all([
-    authenticatedServerApiFetch(
-      "/api/v1/profile",
-    ),
-    supabase
+  const { data: countries } =
+    await supabase
       .from("countries")
       .select("id, name")
-      .order("name"),
-  ]);
-
-  if (!profileResponse.ok) {
-    throw new Error(
-      "Unable to load your profile.",
-    );
-  }
-
-  const profile =
-    (await profileResponse.json()) as ProfileResponse;
+      .order("name");
 
   return (
     <section className="workspace-shell">
-      <div className="shell workspace-grid">
-        <WorkspaceNav />
+      <WorkspaceNav />
 
+      <div className="workspace-content">
         <div className="workspace-main">
           <section className="workspace-panel workspace-page-panel">
             <div className="workspace-panel-head">
@@ -51,19 +29,12 @@ export default async function ProfilePage() {
                 <span className="eyebrow">
                   Account
                 </span>
+
                 <h2>Your profile</h2>
               </div>
             </div>
 
-            <ProfileForm
-              email={profile.email ?? ""}
-              initialFullName={
-                profile.full_name ?? ""
-              }
-              initialCountryId={
-                profile.preferred_country_id ??
-                ""
-              }
+            <ProfileLoader
               countries={countries ?? []}
             />
           </section>
