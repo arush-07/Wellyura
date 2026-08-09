@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -104,10 +104,6 @@ export default async function AccommodationDetailPage({
                   {stay.genderPolicy}
                 </span>
               </div>
-            </div>
-
-            <div className="entity-monogram">
-              STAY
             </div>
           </div>
         </div>
