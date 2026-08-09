@@ -2979,3 +2979,28 @@ main { min-height: 70vh; overflow: clip; }
     width: 100%;
   }
 }
+
+/* Workspace alignment refinement */
+.workspace-shell {
+  padding-inline: 20px;
+}
+
+.workspace-shell .container.workspace-grid {
+  width: min(1320px, 100%);
+  margin-inline: auto;
+  align-items: start;
+}
+
+.workspace-page-panel {
+  min-height: 650px;
+}
+
+.profile-form {
+  max-width: 680px;
+  display: grid;
+  gap: 16px;
+}
+
+.profile-form .button {
+  width: 100%;
+}
