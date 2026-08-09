@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: "Wellyura",
-  keywords: ["study abroad", "universities", "international programmes", "scholarships", "student accommodation"],
+  keywords: ["study abroad", "universities", "international programmes", "student accommodation"],
   openGraph: {
     type: "website",
     title: siteConfig.title,
