@@ -1,3 +1,4 @@
+import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 import type { Metadata } from "next";
 
 import Image from "next/image";
@@ -168,7 +169,7 @@ export default async function AccommodationDetailPage({
               </span>
 
               <h3>
-                {formatCad(stay.priceCad)} /{" "}
+                {formatAccommodationPrice(stay.priceCad, stay.country)} /{" "}
                 {stay.billingPeriod}
               </h3>
 

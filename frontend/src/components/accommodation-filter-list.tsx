@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useMemo,
@@ -8,7 +8,7 @@ import Image from "next/image";
 import { MapPin, Star } from "lucide-react";
 
 import { AccommodationDetailGate } from "@/components/accommodation-detail-gate";
-import { formatCad } from "@/lib/format";
+import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 
 type AccommodationItem = {
   slug: string;
@@ -29,6 +29,14 @@ type AccommodationFilterListProps = {
   stays: AccommodationItem[];
 };
 
+const ACCOMMODATION_TYPES = [
+  "Homestay",
+  "Shared Apartment",
+  "Studio",
+  "Student Residence",
+] as const;
+
+
 export function AccommodationFilterList({
   stays,
 }: AccommodationFilterListProps) {
@@ -36,6 +44,9 @@ export function AccommodationFilterList({
     useState("");
 
   const [selectedCity, setSelectedCity] =
+    useState("");
+
+  const [selectedType, setSelectedType] =
     useState("");
 
   const countries = useMemo(
@@ -63,6 +74,7 @@ export function AccommodationFilterList({
     ).sort();
   }, [selectedCountry, stays]);
 
+
   const filteredStays = useMemo(
     () =>
       stays.filter((stay) => {
@@ -74,14 +86,20 @@ export function AccommodationFilterList({
           !selectedCity ||
           stay.city === selectedCity;
 
+        const typeMatches =
+          !selectedType ||
+          stay.type === selectedType;
+
         return (
           countryMatches &&
-          cityMatches
+          cityMatches &&
+          typeMatches
         );
       }),
     [
       selectedCountry,
       selectedCity,
+      selectedType,
       stays,
     ],
   );
@@ -96,6 +114,7 @@ export function AccommodationFilterList({
   function clearFilters() {
     setSelectedCountry("");
     setSelectedCity("");
+    setSelectedType("");
   }
 
   return (
@@ -107,7 +126,7 @@ export function AccommodationFilterList({
           </span>
 
           <h2>
-            Browse by country and city
+            Browse by country, city and type
           </h2>
 
           <p>
@@ -170,6 +189,32 @@ export function AccommodationFilterList({
             </select>
           </label>
 
+          <label>
+            <span>Type</span>
+
+            <select
+              value={selectedType}
+              onChange={(event) =>
+                setSelectedType(
+                  event.target.value,
+                )
+              }
+            >
+              <option value="">
+                All types
+              </option>
+
+              {ACCOMMODATION_TYPES.map((type) => (
+                <option
+                  value={type}
+                  key={type}
+                >
+                  {type}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <button
             className="button"
             type="button"
@@ -187,7 +232,8 @@ export function AccommodationFilterList({
           </h3>
 
           <p>
-            Try another country or city.
+            Try another country, city or
+            accommodation type.
           </p>
         </div>
       ) : (
@@ -219,8 +265,11 @@ export function AccommodationFilterList({
                 </p>
 
                 <strong>
-                  {formatCad(stay.priceCad)} /{" "}
-                  {stay.billingPeriod}
+                  {formatAccommodationPrice(
+                    stay.priceCad,
+                    stay.country,
+                  )}{" "}
+                  / {stay.billingPeriod}
                 </strong>
 
                 <p>{stay.description}</p>

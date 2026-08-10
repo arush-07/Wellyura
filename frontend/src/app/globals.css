@@ -3949,3 +3949,58 @@ a[href="https://wellyura.com/scholarships"] {
     transform: scale(1.2);
   }
 }
+
+/* Accommodation filter type control refinement */
+@media (min-width: 861px) {
+  .accommodation-filter-controls {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(150px, 180px)) auto;
+    align-items: end;
+  }
+}
+
+/* Accommodation filter layout polish */
+.accommodation-filter-controls {
+  gap: 14px !important;
+}
+
+.accommodation-filter-controls label {
+  min-width: 0 !important;
+}
+
+.accommodation-filter-controls select {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding-inline: 18px 42px !important;
+}
+
+.accommodation-filter-controls .button {
+  border-radius: 999px !important;
+  min-width: 86px !important;
+  white-space: nowrap !important;
+  background: var(--paper) !important;
+}
+
+@media (min-width: 861px) {
+  .accommodation-filter-controls {
+    display: grid !important;
+    grid-template-columns:
+      minmax(165px, 1fr)
+      minmax(165px, 1fr)
+      minmax(210px, 1fr)
+      auto !important;
+    width: min(780px, 100%) !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .accommodation-filter-controls {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+
+  .accommodation-filter-controls .button {
+    width: 100% !important;
+  }
+}
