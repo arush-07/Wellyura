@@ -1,4 +1,4 @@
-import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
+﻿import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 import type { Metadata } from "next";
 
 import Image from "next/image";
@@ -168,8 +168,7 @@ export default async function AccommodationDetailPage({
               </h3>
 
               <p>
-                Current migrated listing price
-                displayed in CAD.
+                Estimated monthly listing price shown in the local currency.
               </p>
             </div>
 
@@ -191,3 +190,4 @@ export default async function AccommodationDetailPage({
     </>
   );
 }
+
