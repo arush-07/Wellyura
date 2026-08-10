@@ -3887,3 +3887,37 @@ a[href="https://wellyura.com/scholarships"] {
     display: none !important;
   }
 }
+
+/* Final compact mobile menu sizing */
+@media (max-width: 760px) {
+  .site-header {
+    min-height: auto !important;
+  }
+
+  .site-header .mobile-menu,
+  .mobile-menu {
+    padding-bottom: 10px !important;
+  }
+
+  .site-header .mobile-menu nav,
+  .mobile-menu nav {
+    padding: 4px 34px 12px !important;
+    gap: 0 !important;
+  }
+
+  .site-header .mobile-menu nav a,
+  .mobile-menu nav a,
+  .site-header .mobile-menu nav button,
+  .mobile-menu nav button {
+    min-height: 36px !important;
+    padding: 7px 0 !important;
+    font-size: .84rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .site-header .mobile-menu .button,
+  .mobile-menu .button {
+    min-height: 36px !important;
+    padding-block: 7px !important;
+  }
+}
