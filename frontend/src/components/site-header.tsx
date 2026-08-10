@@ -295,13 +295,6 @@ export function SiteHeader({
               </Link>
             ))}
 
-            <Link
-              href="/compare"
-              onClick={() => setOpen(false)}
-            >
-              Compare
-            </Link>
-
             {authenticated ? (
               <>
                 <Link

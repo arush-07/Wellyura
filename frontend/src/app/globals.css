@@ -3548,3 +3548,342 @@ a[href="https://wellyura.com/scholarships"] {
     display: none !important;
   }
 }
+
+/* Mobile responsive cleanup */
+@media (max-width: 760px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    overflow: hidden;
+  }
+
+  .site-header .shell,
+  .site-header .container,
+  .site-header-inner,
+  .header-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    padding-inline: 18px !important;
+  }
+
+  .brand,
+  .site-brand,
+  .logo-link {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .brand img,
+  .site-brand img,
+  .logo-link img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand span,
+  .site-brand span,
+  .logo-link span {
+    font-size: 1.35rem !important;
+    white-space: nowrap;
+  }
+
+  .site-header nav,
+  .header-nav,
+  .site-nav,
+  .desktop-nav,
+  .nav-links {
+    display: none !important;
+  }
+
+  .site-header-actions,
+  .header-actions,
+  .auth-actions,
+  .user-actions {
+    gap: 10px !important;
+    flex-shrink: 0;
+  }
+
+  .site-header-actions a,
+  .header-actions a,
+  .auth-actions a,
+  .user-actions a,
+  .site-header-actions button,
+  .header-actions button,
+  .auth-actions button,
+  .user-actions button {
+    font-size: .76rem !important;
+    padding-inline: 13px !important;
+    min-height: 38px !important;
+  }
+
+  .mobile-menu-button,
+  .menu-button,
+  .hamburger,
+  [aria-label="Open menu"],
+  [aria-label="Menu"] {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero,
+  .page-hero {
+    overflow: hidden;
+  }
+
+  .hero .shell,
+  .page-hero .shell {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding-inline: 22px !important;
+  }
+
+  .hero h1,
+  .page-hero h1,
+  .entity-heading h1 {
+    font-size: clamp(2.8rem, 14vw, 4.2rem) !important;
+    line-height: .96 !important;
+    letter-spacing: -.06em !important;
+    max-width: 100% !important;
+  }
+
+  .hero p,
+  .page-hero p,
+  .entity-heading p {
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+    max-width: 100% !important;
+  }
+
+  .hero-visual,
+  .hero-orb,
+  .hero-globe,
+  .hero-art {
+    max-width: 100% !important;
+    transform: none !important;
+  }
+
+  .search-shell,
+  .hero-search,
+  .search-bar,
+  .search-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .search-shell input,
+  .hero-search input,
+  .search-bar input,
+  .search-form input {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: .9rem !important;
+  }
+
+  .section,
+  .shell,
+  .container {
+    max-width: 100% !important;
+  }
+
+  .university-grid,
+  .programme-grid,
+  .country-grid,
+  .accommodation-grid,
+  .card-grid,
+  .feature-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .marquee,
+  .hero-marquee {
+    overflow: hidden !important;
+  }
+
+  .hero-marquee span,
+  .marquee span {
+    font-size: .85rem !important;
+  }
+
+  .cookie-consent-card {
+    width: calc(100vw - 24px) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero h1,
+  .page-hero h1,
+  .entity-heading h1 {
+    font-size: clamp(2.45rem, 13vw, 3.45rem) !important;
+  }
+
+  .hero .shell,
+  .page-hero .shell {
+    padding-inline: 18px !important;
+  }
+
+  .site-header .shell,
+  .site-header .container,
+  .site-header-inner,
+  .header-inner {
+    padding-inline: 14px !important;
+  }
+
+  .brand span,
+  .site-brand span,
+  .logo-link span {
+    font-size: 1.18rem !important;
+  }
+}
+
+/* Mobile hero search fix */
+@media (max-width: 760px) {
+  .hero {
+    padding-bottom: 42px !important;
+  }
+
+  .hero-search,
+  .search-bar,
+  .search-form {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 12px !important;
+    border-radius: 22px !important;
+    overflow: visible !important;
+  }
+
+  .hero-search input,
+  .search-bar input,
+  .search-form input {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: .9rem !important;
+    padding-inline: 8px !important;
+  }
+
+  .hero-search button,
+  .search-bar button,
+  .search-form button {
+    width: 100% !important;
+    min-height: 48px !important;
+    border-radius: 999px !important;
+    justify-content: center !important;
+  }
+
+  .hero .shell {
+    padding-top: 52px !important;
+  }
+
+  .popular-row,
+  .popular-now,
+  .hero-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
+/* Fix mobile dropdown menu visibility */
+@media (max-width: 760px) {
+  .site-header .mobile-menu,
+  .mobile-menu {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .site-header .mobile-menu nav,
+  .mobile-menu nav {
+    display: grid !important;
+    gap: 0 !important;
+    width: 100% !important;
+  }
+
+  .site-header .mobile-menu nav a,
+  .mobile-menu nav a,
+  .site-header .mobile-menu nav button,
+  .mobile-menu nav button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 16px 22px !important;
+    border-bottom: 1px solid var(--line) !important;
+    color: var(--ink) !important;
+    font-size: .95rem !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+  }
+}
+
+/* Compact mobile menu */
+@media (max-width: 760px) {
+  .mobile-menu {
+    padding: 0 !important;
+    max-height: calc(100dvh - 112px) !important;
+    overflow-y: auto !important;
+  }
+
+  .mobile-menu nav {
+    display: grid !important;
+    gap: 0 !important;
+    padding: 8px 24px 20px !important;
+  }
+
+  .mobile-menu nav a,
+  .mobile-menu nav button {
+    padding: 11px 0 !important;
+    min-height: 42px !important;
+    border-bottom: 1px solid var(--line) !important;
+    font-size: .9rem !important;
+    font-weight: 850 !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .mobile-menu a[href="/scholarships"],
+  .mobile-menu a[href="/compare"],
+  .mobile-menu button[href="/scholarships"],
+  .mobile-menu button[href="/compare"] {
+    display: none !important;
+  }
+
+  .mobile-menu nav a:last-child,
+  .mobile-menu nav button:last-child {
+    border-bottom: 0 !important;
+  }
+}
+
+/* Force remove Scholarships from mobile menu */
+@media (max-width: 760px) {
+  .mobile-menu nav > :nth-child(5) {
+    display: none !important;
+  }
+}
+
+/* Final force-remove Scholarships from mobile menu */
+@media (max-width: 760px) {
+  .mobile-menu nav a:nth-of-type(5),
+  .mobile-menu nav button:nth-of-type(5),
+  .mobile-menu a:nth-of-type(5),
+  .mobile-menu button:nth-of-type(5),
+  .site-header .mobile-menu nav a:nth-of-type(5),
+  .site-header .mobile-menu nav button:nth-of-type(5),
+  .site-header [class*="mobile"] a:nth-of-type(5),
+  .site-header [class*="mobile"] button:nth-of-type(5),
+  .site-header a[href*="scholar"],
+  .mobile-menu a[href*="scholar"],
+  a[href*="/scholarships"] {
+    display: none !important;
+  }
+}
