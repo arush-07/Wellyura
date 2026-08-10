@@ -5,7 +5,7 @@ import {
   useState,
 } from "react";
 import Image from "next/image";
-import { MapPin, Star } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 import { AccommodationDetailGate } from "@/components/accommodation-detail-gate";
 import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
@@ -285,13 +285,6 @@ export function AccommodationFilterList({
                 </div>
 
                 <div className="university-card-foot">
-                  <span className="data-status">
-                    <Star
-                      size={14}
-                      fill="currentColor"
-                    />
-                    {stay.rating.toFixed(1)} migrated rating
-                  </span>
 
                   <AccommodationDetailGate
                     href={`/accommodation/${stay.slug}`}

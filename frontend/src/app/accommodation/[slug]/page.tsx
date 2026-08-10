@@ -10,7 +10,6 @@ import {
   Check,
   MapPin,
   ShieldCheck,
-  Star,
 } from "lucide-react";
 
 import {
@@ -94,11 +93,6 @@ export default async function AccommodationDetailPage({
                 <span className="stat-pill">
                   <MapPin size={14} />
                   {stay.city}
-                </span>
-
-                <span className="stat-pill">
-                  <Star size={14} />
-                  {stay.rating.toFixed(1)}
                 </span>
 
                 <span className="stat-pill">

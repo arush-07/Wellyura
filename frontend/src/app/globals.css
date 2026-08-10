@@ -4004,3 +4004,8 @@ a[href="https://wellyura.com/scholarships"] {
     width: 100% !important;
   }
 }
+
+/* Accommodation card footer after removing migrated rating */
+.accommodation-grid .university-card-foot {
+  justify-content: flex-end;
+}
