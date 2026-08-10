@@ -1,13 +1,9 @@
-"use client";
+﻿"use client";
 
-import {
-  useMemo,
-  useState,
-} from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { MapPin } from "lucide-react";
-
-import { AccommodationDetailGate } from "@/components/accommodation-detail-gate";
 import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 
 type AccommodationItem = {
@@ -16,10 +12,11 @@ type AccommodationItem = {
   type: string;
   city: string;
   country: string;
-  commute: string;
   priceCad: number;
   billingPeriod: string;
   rating: number;
+  commute: string;
+  genderPolicy: string;
   description: string;
   amenities: string[];
   images: string[];
@@ -36,266 +33,214 @@ const ACCOMMODATION_TYPES = [
   "Student Residence",
 ] as const;
 
+function getGenderLabel(policy: string) {
+  const normalized = policy.toLowerCase();
+
+  if (normalized.includes("girl")) {
+    return "Girls only";
+  }
+
+  return "All students";
+}
 
 export function AccommodationFilterList({
   stays,
 }: AccommodationFilterListProps) {
-  const [selectedCountry, setSelectedCountry] =
-    useState("");
-
-  const [selectedCity, setSelectedCity] =
-    useState("");
-
-  const [selectedType, setSelectedType] =
-    useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
 
   const countries = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          stays.map((stay) => stay.country),
-        ),
-      ).sort(),
+    () => Array.from(new Set(stays.map((stay) => stay.country))).sort(),
     [stays],
   );
 
-  const cities = useMemo(() => {
-    const source = selectedCountry
-      ? stays.filter(
-          (stay) =>
-            stay.country === selectedCountry,
-        )
-      : stays;
-
-    return Array.from(
-      new Set(
-        source.map((stay) => stay.city),
-      ),
-    ).sort();
-  }, [selectedCountry, stays]);
-
+  const cities = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          stays
+            .filter(
+              (stay) =>
+                !selectedCountry || stay.country === selectedCountry,
+            )
+            .map((stay) => stay.city),
+        ),
+      ).sort(),
+    [selectedCountry, stays],
+  );
 
   const filteredStays = useMemo(
     () =>
       stays.filter((stay) => {
         const countryMatches =
-          !selectedCountry ||
-          stay.country === selectedCountry;
+          !selectedCountry || stay.country === selectedCountry;
 
-        const cityMatches =
-          !selectedCity ||
-          stay.city === selectedCity;
+        const cityMatches = !selectedCity || stay.city === selectedCity;
 
-        const typeMatches =
-          !selectedType ||
-          stay.type === selectedType;
+        const typeMatches = !selectedType || stay.type === selectedType;
+
+        const genderMatches =
+          !selectedGender || stay.genderPolicy === selectedGender;
 
         return (
           countryMatches &&
           cityMatches &&
-          typeMatches
+          typeMatches &&
+          genderMatches
         );
       }),
     [
       selectedCountry,
       selectedCity,
       selectedType,
+      selectedGender,
       stays,
     ],
   );
-
-  function handleCountryChange(
-    country: string,
-  ) {
-    setSelectedCountry(country);
-    setSelectedCity("");
-  }
 
   function clearFilters() {
     setSelectedCountry("");
     setSelectedCity("");
     setSelectedType("");
+    setSelectedGender("");
   }
 
   return (
-    <>
-      <div className="accommodation-filter-bar">
-        <div>
-          <span className="eyebrow">
-            Filter stays
-          </span>
-
-          <h2>
-            Browse by country, city and type
-          </h2>
-
-          <p>
-            Showing {filteredStays.length} of{" "}
-            {stays.length} accommodation
-            options.
-          </p>
-        </div>
-
-        <div className="accommodation-filter-controls">
-          <label>
-            <span>Country</span>
-
-            <select
-              value={selectedCountry}
-              onChange={(event) =>
-                handleCountryChange(
-                  event.target.value,
-                )
-              }
-            >
-              <option value="">
-                All countries
-              </option>
-
-              {countries.map((country) => (
-                <option
-                  value={country}
-                  key={country}
-                >
-                  {country}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            <span>City</span>
-
-            <select
-              value={selectedCity}
-              onChange={(event) =>
-                setSelectedCity(
-                  event.target.value,
-                )
-              }
-            >
-              <option value="">
-                All cities
-              </option>
-
-              {cities.map((city) => (
-                <option
-                  value={city}
-                  key={city}
-                >
-                  {city}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            <span>Type</span>
-
-            <select
-              value={selectedType}
-              onChange={(event) =>
-                setSelectedType(
-                  event.target.value,
-                )
-              }
-            >
-              <option value="">
-                All types
-              </option>
-
-              {ACCOMMODATION_TYPES.map((type) => (
-                <option
-                  value={type}
-                  key={type}
-                >
-                  {type}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <button
-            className="button"
-            type="button"
-            onClick={clearFilters}
-          >
-            Clear
-          </button>
-        </div>
+    <section className="accommodation-filter-block">
+      <div className="accommodation-filter-copy">
+        <p className="eyebrow">Filter stays</p>
+        <h2>Browse by country, city, type and gender</h2>
+        <p>
+          Showing {filteredStays.length} of {stays.length} accommodation
+          options.
+        </p>
       </div>
 
-      {filteredStays.length === 0 ? (
-        <div className="empty-state">
-          <h3>
-            No accommodation found
-          </h3>
+      <div className="accommodation-filter-controls">
+        <label>
+          <span>Country</span>
+          <select
+            value={selectedCountry}
+            onChange={(event) => {
+              setSelectedCountry(event.target.value);
+              setSelectedCity("");
+            }}
+          >
+            <option value="">All countries</option>
 
-          <p>
-            Try another country, city or
-            accommodation type.
-          </p>
-        </div>
-      ) : (
+            {countries.map((country) => (
+              <option value={country} key={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>City</span>
+          <select
+            value={selectedCity}
+            onChange={(event) => setSelectedCity(event.target.value)}
+          >
+            <option value="">All cities</option>
+
+            {cities.map((city) => (
+              <option value={city} key={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Type</span>
+          <select
+            value={selectedType}
+            onChange={(event) => setSelectedType(event.target.value)}
+          >
+            <option value="">All types</option>
+
+            {ACCOMMODATION_TYPES.map((type) => (
+              <option value={type} key={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Gender</span>
+          <select
+            value={selectedGender}
+            onChange={(event) => setSelectedGender(event.target.value)}
+          >
+            <option value="">All students</option>
+            <option value="Girls only">Girls only</option>
+          </select>
+        </label>
+
+        <button
+          type="button"
+          className="accommodation-clear-filter"
+          onClick={clearFilters}
+        >
+          Clear
+        </button>
+      </div>
+
+      {filteredStays.length > 0 ? (
         <div className="accommodation-grid">
-          {filteredStays.map((stay) => (
-            <article
-              className="university-card"
+          {filteredStays.map((stay, index) => (
+            <Link
+              className="accommodation-card-link"
+              href={`/accommodation/${stay.slug}`}
+              aria-label={`View ${stay.name}`}
               key={stay.slug}
             >
-              <Image
-                className="university-card-image"
-                src={stay.images[0]}
-                alt={stay.name}
-                width={900}
-                height={600}
-              />
+              <article className="university-card accommodation-card">
+                <Image
+                  src={stay.images[0]}
+                  alt={stay.name}
+                  width={900}
+                  height={600}
+                  className="university-card-image"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  sizes="(max-width: 860px) 100vw, 50vw"
+                />
 
-              <div className="university-card-body">
-                <span className="card-kicker">
-                  {stay.type}
-                </span>
+                <div className="university-card-content">
+                  <h3>{stay.name}</h3>
 
-                <h3>{stay.name}</h3>
+                  <p className="accommodation-location">
+                    <MapPin size={15} />
+                    {stay.city}, {stay.country} · {stay.commute}
+                  </p>
 
-                <p>
-                  <MapPin size={14} />
-                  {stay.city}, {stay.country} ·{" "}
-                  {stay.commute}
-                </p>
+                  <p className="accommodation-price">
+                    {formatAccommodationPrice(stay.priceCad, stay.country)} /{" "}
+                    {stay.billingPeriod}
+                  </p>
 
-                <strong>
-                  {formatAccommodationPrice(
-                    stay.priceCad,
-                    stay.country,
-                  )}{" "}
-                  / {stay.billingPeriod}
-                </strong>
+                  <p>{stay.description}</p>
 
-                <p>{stay.description}</p>
-
-                <div className="tag-list">
-                  {stay.amenities
-                    .slice(0, 5)
-                    .map((amenity) => (
-                      <span key={amenity}>
-                        {amenity}
-                      </span>
-                    ))}
+                  <div className="accommodation-card-tags">
+                    <span className="gender-policy-pill">
+                      {getGenderLabel(stay.genderPolicy)}
+                    </span>
+                  </div>
                 </div>
-
-                <div className="university-card-foot">
-
-                  <AccommodationDetailGate
-                    href={`/accommodation/${stay.slug}`}
-                    accommodationName={stay.name}
-                  />
-                </div>
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
+      ) : (
+        <div className="accommodation-empty-state">
+          <h3>No stays found</h3>
+          <p>Try clearing one or more filters.</p>
+        </div>
       )}
-    </>
+    </section>
   );
 }

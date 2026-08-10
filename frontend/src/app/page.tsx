@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="shell ecosystem-grid">
           <div className="ecosystem-copy">
             <span className="eyebrow eyebrow-light">Student-first. Partner-ready.</span>
-            <h2>Built for ambitious studentsâ€”and the global ecosystem supporting them.</h2>
+            <h2>Built for ambitious students and the global ecosystem supporting them.</h2>
             <p>Wellyura keeps the experience fresh and approachable for students while giving universities and education partners a credible, structured place to be discovered.</p>
             <Link className="button button-lime" href="/contact">Connect with Wellyura <ArrowRight size={18} /></Link>
           </div>

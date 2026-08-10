@@ -1,4 +1,4 @@
-﻿import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
+import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 import type { Metadata } from "next";
 
 import Image from "next/image";
@@ -106,7 +106,7 @@ export default async function AccommodationDetailPage({
 
       <section className="section shell">
         <div className="accommodation-grid">
-          {stay.images.map(
+          {stay.images.slice(1).map(
             (image, index) => (
               <Image
                 className="stay-image"
