@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MapPin } from "lucide-react";
 import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
+import { createClient } from "@/lib/supabase/client";
 
 type AccommodationItem = {
   slug: string;
@@ -46,10 +48,14 @@ function getGenderLabel(policy: string) {
 export function AccommodationFilterList({
   stays,
 }: AccommodationFilterListProps) {
+  const router = useRouter();
+  const supabase = useMemo(() => createClient(), []);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
+  const [lockedStay, setLockedStay] =
+    useState<AccommodationItem | null>(null);
 
   const countries = useMemo(
     () => Array.from(new Set(stays.map((stay) => stay.country))).sort(),
@@ -105,6 +111,19 @@ export function AccommodationFilterList({
     setSelectedCity("");
     setSelectedType("");
     setSelectedGender("");
+  }
+
+  async function openStay(stay: AccommodationItem) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      router.push(`/accommodation/${stay.slug}`);
+      return;
+    }
+
+    setLockedStay(stay);
   }
 
   return (
@@ -193,52 +212,100 @@ export function AccommodationFilterList({
       {filteredStays.length > 0 ? (
         <div className="accommodation-grid">
           {filteredStays.map((stay, index) => (
-            <Link
-              className="accommodation-card-link"
-              href={`/accommodation/${stay.slug}`}
-              aria-label={`View ${stay.name}`}
+            <article
+              className="university-card accommodation-card accommodation-card-link"
               key={stay.slug}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                void openStay(stay);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  void openStay(stay);
+                }
+              }}
             >
-              <article className="university-card accommodation-card">
-                <Image
-                  src={stay.images[0]}
-                  alt={stay.name}
-                  width={900}
-                  height={600}
-                  className="university-card-image"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  sizes="(max-width: 860px) 100vw, 50vw"
-                />
+              <Image
+                src={stay.images[0]}
+                alt={stay.name}
+                width={900}
+                height={600}
+                className="university-card-image"
+                loading={index === 0 ? "eager" : "lazy"}
+                sizes="(max-width: 860px) 100vw, 50vw"
+              />
 
-                <div className="university-card-content">
-                  <h3>{stay.name}</h3>
+              <div className="university-card-content">
+                <h3>{stay.name}</h3>
 
-                  <p className="accommodation-location">
-                    <MapPin size={15} />
-                    {stay.city}, {stay.country} · {stay.commute}
-                  </p>
+                <p className="accommodation-location">
+                  <MapPin size={15} />
+                  {stay.city}, {stay.country} · {stay.commute}
+                </p>
 
-                  <p className="accommodation-price">
-                    {formatAccommodationPrice(stay.priceCad, stay.country)} /{" "}
-                    {stay.billingPeriod}
-                  </p>
+                <p className="accommodation-price">
+                  {formatAccommodationPrice(stay.priceCad, stay.country)} /{" "}
+                  {stay.billingPeriod}
+                </p>
 
-                  <p>{stay.description}</p>
+                <p>{stay.description}</p>
 
-                  <div className="accommodation-card-tags">
-                    <span className="gender-policy-pill">
-                      {getGenderLabel(stay.genderPolicy)}
-                    </span>
-                  </div>
+                <div className="accommodation-card-tags">
+                  <span className="gender-policy-pill">
+                    {getGenderLabel(stay.genderPolicy)}
+                  </span>
                 </div>
-              </article>
-            </Link>
+              </div>
+            </article>
           ))}
         </div>
       ) : (
         <div className="accommodation-empty-state">
           <h3>No stays found</h3>
           <p>Try clearing one or more filters.</p>
+        </div>
+      )}
+
+      {lockedStay && (
+        <div
+          className="accommodation-card-auth-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="accommodation-card-auth-title"
+        >
+          <div className="accommodation-card-auth-modal">
+            <button
+              type="button"
+              className="accommodation-card-auth-close"
+              onClick={() => setLockedStay(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+
+            <p className="eyebrow">Sign in required</p>
+
+            <h2 id="accommodation-card-auth-title">
+              View {lockedStay.name}
+            </h2>
+
+            <p>
+              To open accommodation details, please sign in or create your
+              Wellyura account.
+            </p>
+
+            <div className="accommodation-card-auth-actions">
+              <Link className="button button-dark" href="/login">
+                Sign in
+              </Link>
+
+              <Link className="button button-lime" href="/register">
+                Create account
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </section>
