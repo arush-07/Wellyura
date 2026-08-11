@@ -4865,3 +4865,50 @@ html {
   flex: 1 1 170px;
   justify-content: center;
 }
+
+/* Profile loading state fix */
+.profile-loading-state {
+  display: grid;
+  gap: 18px;
+  width: min(720px, 100%);
+}
+
+.profile-loading-line {
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(9, 20, 44, 0.08),
+    rgba(9, 20, 44, 0.16),
+    rgba(9, 20, 44, 0.08)
+  );
+  background-size: 220% 100%;
+  animation: profile-loading-shimmer 1.2s ease-in-out infinite;
+}
+
+.profile-loading-line:nth-child(1) {
+  width: 38%;
+  height: 22px;
+}
+
+.profile-loading-line:nth-child(2) {
+  width: 72%;
+}
+
+.profile-loading-line:nth-child(3) {
+  width: 64%;
+}
+
+.profile-loading-line:nth-child(4) {
+  width: 48%;
+}
+
+@keyframes profile-loading-shimmer {
+  from {
+    background-position: 220% 0;
+  }
+
+  to {
+    background-position: -220% 0;
+  }
+}
