@@ -4497,3 +4497,283 @@ section .ecosystem-copy h2,
     line-height: 1.05 !important;
   }
 }
+
+/* FINAL mobile announcement strip fix */
+.announcement-bar {
+  overflow: hidden !important;
+  height: 58px !important;
+}
+
+.announcement-track {
+  display: flex !important;
+  width: max-content !important;
+  min-width: 200vw !important;
+  animation: announcement-loop 18s linear infinite !important;
+  will-change: transform !important;
+}
+
+.announcement-group {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  flex: 0 0 100vw !important;
+  min-width: 100vw !important;
+  gap: 38px !important;
+  white-space: nowrap !important;
+}
+
+.announcement-group span {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+  font-size: 0.92rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+@keyframes announcement-loop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100vw);
+  }
+}
+
+@media (max-width: 640px) {
+  .announcement-bar {
+    height: 54px !important;
+  }
+
+  .announcement-group {
+    justify-content: space-evenly !important;
+    gap: 48px !important;
+  }
+
+  .announcement-group span {
+    font-size: 0.86rem !important;
+    letter-spacing: 0.06em !important;
+  }
+}
+
+/* FINAL: keep announcement strip visible on mobile without overlap */
+@media (max-width: 860px) {
+  .announcement-bar {
+    display: block !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    overflow: hidden !important;
+  }
+
+  .announcement-track {
+    animation: none !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  .announcement-group {
+    width: 100% !important;
+    min-width: 100% !important;
+    flex: 0 0 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 22px !important;
+    overflow: hidden !important;
+  }
+
+  .announcement-group:not(:first-child) {
+    display: none !important;
+  }
+
+  .announcement-group span {
+    display: none !important;
+  }
+
+  .announcement-group span:nth-child(1),
+  .announcement-group span:nth-child(2) {
+    display: inline-flex !important;
+    white-space: nowrap !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.08em !important;
+  }
+}
+
+/* FINAL: moving mobile announcement strip without overlap */
+@media (max-width: 860px) {
+  .site-header .announcement-bar,
+  .announcement-bar {
+    display: block !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    overflow: hidden !important;
+  }
+
+  .site-header .announcement-track,
+  .announcement-track {
+    display: flex !important;
+    width: max-content !important;
+    min-width: 200vw !important;
+    animation: announcement-mobile-loop 14s linear infinite !important;
+    transform: translateX(0);
+    will-change: transform !important;
+  }
+
+  .site-header .announcement-track .announcement-group,
+  .site-header .announcement-track .announcement-group:not(:first-child),
+  .announcement-track .announcement-group,
+  .announcement-track .announcement-group:not(:first-child) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    flex: 0 0 100vw !important;
+    min-width: 100vw !important;
+    gap: 42px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  .site-header .announcement-track .announcement-group span,
+  .site-header .announcement-track .announcement-group span:nth-child(1),
+  .site-header .announcement-track .announcement-group span:nth-child(2),
+  .announcement-track .announcement-group span,
+  .announcement-track .announcement-group span:nth-child(1),
+  .announcement-track .announcement-group span:nth-child(2) {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.08em !important;
+  }
+}
+
+@keyframes announcement-mobile-loop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100vw);
+  }
+}
+
+/* FINAL REAL MARQUEE FIX */
+.site-header .announcement-bar {
+  display: block !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  overflow: hidden !important;
+  background: var(--ink) !important;
+}
+
+.site-header .announcement-track {
+  display: flex !important;
+  width: max-content !important;
+  min-width: 200% !important;
+  animation-name: wellyura-marquee-final !important;
+  animation-duration: 12s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  will-change: transform !important;
+}
+
+.site-header .announcement-group {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  min-width: 100vw !important;
+  gap: 34px !important;
+  padding-inline: 34px !important;
+  white-space: nowrap !important;
+}
+
+.site-header .announcement-group span {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  color: var(--lime) !important;
+  font-weight: 900 !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.08em !important;
+  white-space: nowrap !important;
+}
+
+@keyframes wellyura-marquee-final {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 860px) {
+  .site-header .announcement-bar {
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+
+  .site-header .announcement-track {
+    animation-name: wellyura-marquee-final !important;
+    animation-duration: 8s !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .site-header .announcement-group {
+    min-width: max-content !important;
+    gap: 30px !important;
+    padding-inline: 18px !important;
+  }
+
+  .site-header .announcement-group span {
+    font-size: 0.78rem !important;
+  }
+}
+
+/* FINAL performance patch */
+html {
+  scroll-behavior: auto !important;
+}
+
+@media (max-width: 860px) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 120ms !important;
+  }
+
+  .hero-visual,
+  .ecosystem-cards,
+  .entity-heading::before,
+  .entity-heading::after {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .accommodation-card-link:hover .accommodation-card,
+  .university-card:hover,
+  .info-card:hover,
+  .programme-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .announcement-track {
+    will-change: transform !important;
+  }
+
+  .page-hero,
+  .hero,
+  .section,
+  .accommodation-grid,
+  .info-grid,
+  .programme-list {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
+  }
+
+  img {
+    content-visibility: auto;
+  }
+}

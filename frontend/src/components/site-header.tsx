@@ -8,10 +8,7 @@ import { BrandMark } from "@/components/brand-mark";
 import { createClient } from "@/lib/supabase/client";
 import { siteConfig } from "@/lib/site";
 
-const globalBannerItems = Array.from(
-  { length: 8 },
-  () => "Wellyura"
-);
+const globalBannerItems = Array.from({ length: 10 }, () => "WELLYURA");
 
 type SiteHeaderProps = {
   compact?: boolean;
