@@ -1,3 +1,4 @@
+import { BreadcrumbStructuredData } from "@/components/breadcrumb-structured-data";
 import { formatAccommodationPrice } from "@/lib/accommodation-pricing";
 import type { Metadata } from "next";
 
@@ -76,6 +77,12 @@ export default async function AccommodationDetailPage({
 
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Accommodation", path: "/accommodation" },
+          { name: stay.name, path: `/accommodation/${stay.slug}` },
+        ]}
+      />
       <section className="entity-hero">
         <div className="shell">
           <div className="entity-breadcrumb">

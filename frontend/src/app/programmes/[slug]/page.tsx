@@ -1,3 +1,4 @@
+import { BreadcrumbStructuredData } from "@/components/breadcrumb-structured-data";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -42,6 +43,13 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
 
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Programmes", path: "/programmes" },
+          { name: programme.universityName, path: `/universities/${programme.universitySlug}` },
+          { name: programme.name, path: `/programmes/${programme.slug}` },
+        ]}
+      />
       <section className="entity-hero">
         <div className="shell">
           <div className="entity-breadcrumb"><Link href="/programmes">Programmes</Link><span>/</span><Link href={`/universities/${programme.universitySlug}`}>{programme.universityName}</Link><span>/</span><strong>{programme.name}</strong></div>

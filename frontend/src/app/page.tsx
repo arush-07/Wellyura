@@ -1,3 +1,4 @@
+import { HomeStructuredData } from "@/components/home-structured-data";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -35,6 +36,7 @@ export default function HomePage() {
 
   return (
     <>
+      <HomeStructuredData />
       <section className="hero-section">
         <div className="hero-grid shell">
           <div className="hero-copy">

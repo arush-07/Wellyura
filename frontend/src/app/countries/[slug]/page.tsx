@@ -1,3 +1,4 @@
+import { BreadcrumbStructuredData } from "@/components/breadcrumb-structured-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CountryFlag } from "@/components/country-flag";
@@ -43,6 +44,12 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Countries", path: "/countries" },
+          { name: `Study in ${country.name}`, path: `/countries/${country.slug}` },
+        ]}
+      />
       <section className="entity-hero" style={{ "--accent": country.accent } as React.CSSProperties}>
         <div className="shell entity-heading">
           <div>
