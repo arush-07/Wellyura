@@ -4,6 +4,7 @@ import { ProgrammeCard } from "@/components/programme-card";
 import { countries, searchProgrammes, subjects } from "@/lib/catalog";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programmes" },
   title: "Programmes",
   description: "Explore undergraduate and postgraduate programmes across Wellyura's global catalogue.",
 };

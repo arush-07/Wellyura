@@ -4,6 +4,7 @@ import { CountryCard } from "@/components/country-card";
 import { countries } from "@/lib/catalog";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/countries" },
   title: "Study destinations",
   description: "Explore Wellyura's study-abroad destinations, universities and programmes by country.",
 };

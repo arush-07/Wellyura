@@ -6,11 +6,32 @@ import { DataStatus } from "@/components/data-status";
 import { getProgramme, getUniversity } from "@/lib/catalog";
 import { formatCad } from "@/lib/format";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const programme = getProgramme(slug);
-  if (!programme) return { title: "Programme not found" };
-  return { title: `${programme.name} at ${programme.universityName}`, description: `Explore ${programme.name}, a ${programme.level.toLowerCase()} programme at ${programme.universityName}.` };
+
+  if (!programme) {
+    return {
+      title: "Programme not found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return {
+    title: `${programme.name} at ${programme.universityName}`,
+    description: `Explore ${programme.name}, a ${programme.level.toLowerCase()} programme at ${programme.universityName}.`,
+    alternates: {
+      canonical: `/programmes/${programme.slug}`,
+    },
+  };
 }
 
 export default async function ProgrammePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -80,7 +101,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <div className="sidebar-card">
             <h3>{programme.universityName}</h3>
             <p><MapPin size={14} /> {programme.city}, {programme.country}</p>
-            <p><GraduationCap size={14} /> {university?.programCount ?? "—"} programmes in the migrated catalogue</p>
+            <p><GraduationCap size={14} /> {university?.programCount ? university.programCount : "\u2014"} programmes in the migrated catalogue</p>
             <p><Clock3 size={14} /> {programme.durationYears ? `${programme.durationYears} years` : "Duration unavailable"}</p>
             <p><BookOpen size={14} /> {programme.level}</p>
             <Link className="button button-lime" href={`/universities/${programme.universitySlug}`}>Explore university</Link>

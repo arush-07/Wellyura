@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, BookOpenText, Calculator, ClipboardCheck, House } from "lucide-react";
 
-export const metadata: Metadata = { title: "Study abroad guides" };
+export const metadata: Metadata = {
+  alternates: { canonical: "/guides" }, title: "Study abroad guides" };
 const guides = [
   ["How to build a realistic university shortlist", "Decision planning", ClipboardCheck],
   ["Understand tuition beyond the headline number", "Costs & funding", Calculator],

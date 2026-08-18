@@ -9,13 +9,31 @@ import { SaveCompareActions } from "@/components/save-compare-actions";
 import { getUniversity, getUniversityProgrammes } from "@/lib/catalog";
 import { formatCad } from "@/lib/format";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const university = getUniversity(slug);
-  if (!university) return { title: "University not found" };
+
+  if (!university) {
+    return {
+      title: "University not found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   return {
     title: university.name,
     description: `Explore programmes, legacy tuition data, intakes and scholarship notes for ${university.name} in ${university.city}, ${university.country}.`,
+    alternates: {
+      canonical: `/universities/${university.slug}`,
+    },
   };
 }
 

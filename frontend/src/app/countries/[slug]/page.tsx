@@ -6,11 +6,32 @@ import { SectionHeading } from "@/components/section-heading";
 import { UniversityCard } from "@/components/university-card";
 import { getCountry, programmes, universities } from "@/lib/catalog";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const country = getCountry(slug);
-  if (!country) return { title: "Country not found" };
-  return { title: `Study in ${country.name}`, description: `Explore universities and programmes in ${country.name} with Wellyura.` };
+
+  if (!country) {
+    return {
+      title: "Country not found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return {
+    title: `Study in ${country.name}`,
+    description: `Explore universities and programmes in ${country.name} with Wellyura.`,
+    alternates: {
+      canonical: `/countries/${country.slug}`,
+    },
+  };
 }
 
 export default async function CountryPage({ params }: { params: Promise<{ slug: string }> }) {

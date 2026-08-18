@@ -1,16 +1,17 @@
-﻿import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+﻿import type { Metadata } from "next";
 
-export default async function WorkspaceLayout({
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
+
+export default function WorkspaceLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return children;
 }
-

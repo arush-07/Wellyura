@@ -24,6 +24,7 @@ import {
   formatCad,
 } from "@/lib/format";
 
+
 export async function generateMetadata({
   params,
 }: {
@@ -37,13 +38,22 @@ export async function generateMetadata({
     (item) => item.slug === slug,
   );
 
-  return {
-    title:
-      stay?.name ??
-      "Accommodation not found",
+  if (!stay) {
+    return {
+      title: "Accommodation not found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
-    description:
-      stay?.description,
+  return {
+    title: stay.name,
+    description: stay.description,
+    alternates: {
+      canonical: `/accommodation/${stay.slug}`,
+    },
   };
 }
 

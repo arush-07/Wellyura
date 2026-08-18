@@ -1,14 +1,58 @@
-import type { MetadataRoute } from "next";
-import { countries, programmes, universities } from "@/lib/catalog";
+﻿import type { MetadataRoute } from "next";
+import {
+  countries,
+  programmes,
+  universities,
+} from "@/lib/catalog";
+import { accommodations } from "@/lib/accommodations";
 import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-  const staticRoutes = ["", "/discover", "/universities", "/programmes", "/countries", "/accommodation", "/compare", "/guides", "/faq", "/contact"];
+  const staticRoutes = [
+    "",
+    "/discover",
+    "/universities",
+    "/programmes",
+    "/countries",
+    "/accommodation",
+    "/guides",
+    "/faq",
+    "/about",
+    "/contact",
+  ];
+
+  const staticPages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: `${siteConfig.url}${route}`,
+  }));
+
+  const countryPages: MetadataRoute.Sitemap = countries.map((country) => ({
+    url: `${siteConfig.url}/countries/${country.slug}`,
+  }));
+
+  const universityPages: MetadataRoute.Sitemap = universities.map(
+    (university) => ({
+      url: `${siteConfig.url}/universities/${university.slug}`,
+    }),
+  );
+
+  const programmePages: MetadataRoute.Sitemap = programmes.map(
+    (programme) => ({
+      url: `${siteConfig.url}/programmes/${programme.slug}`,
+    }),
+  );
+
+  const accommodationPages: MetadataRoute.Sitemap = accommodations.map(
+    (stay) => ({
+      url: `${siteConfig.url}/accommodation/${stay.slug}`,
+      images: stay.images.map((image) => `${siteConfig.url}${image}`),
+    }),
+  );
+
   return [
-    ...staticRoutes.map((route) => ({ url: `${siteConfig.url}${route}`, lastModified: now, changeFrequency: "weekly" as const, priority: route === "" ? 1 : 0.7 })),
-    ...countries.map((country) => ({ url: `${siteConfig.url}/countries/${country.slug}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 })),
-    ...universities.map((university) => ({ url: `${siteConfig.url}/universities/${university.slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.75 })),
-    ...programmes.map((programme) => ({ url: `${siteConfig.url}/programmes/${programme.slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.65 })),
+    ...staticPages,
+    ...countryPages,
+    ...universityPages,
+    ...programmePages,
+    ...accommodationPages,
   ];
 }

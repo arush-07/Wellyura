@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-export const metadata: Metadata = { title: "Frequently asked questions" };
+export const metadata: Metadata = {
+  alternates: { canonical: "/faq" }, title: "Frequently asked questions" };
 const questions = [
   ["Is Wellyura free for students?", "The public discovery, shortlist and comparison experience is designed to be free. Future counselling or application services may have separate commercial terms."],
   ["Are the tuition values current?", "Values migrated from Wellyura v1 are explicitly labelled as legacy data. Students must verify current fees with official university sources."],

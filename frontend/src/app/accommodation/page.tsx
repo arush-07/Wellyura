@@ -1,9 +1,10 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 import { AccommodationFilterList } from "@/components/accommodation-filter-list";
 import { accommodations } from "@/lib/accommodations";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/accommodation" },
   title: "Student accommodation",
   description:
     "Explore curated student stays connected to university destinations.",

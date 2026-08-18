@@ -4,6 +4,7 @@ import { UniversitySearchForm } from "@/components/university-search-form";
 import { countries, searchUniversities, universities } from "@/lib/catalog";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/universities" },
   title: "Universities",
   description: "Explore international universities and colleges across 12 study destinations.",
 };

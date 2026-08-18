@@ -4,6 +4,7 @@ import { UniversityCard } from "@/components/university-card";
 import { countries, searchUniversities } from "@/lib/catalog";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/discover" },
   title: "Discover universities",
   description: "Discover international universities by destination, city and institution name.",
 };
