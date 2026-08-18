@@ -53,7 +53,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
       <section className="entity-hero">
         <div className="shell">
           <div className="entity-breadcrumb"><Link href="/programmes">Programmes</Link><span>/</span><Link href={`/universities/${programme.universitySlug}`}>{programme.universityName}</Link><span>/</span><strong>{programme.name}</strong></div>
-          <div className="entity-heading">
+          <div className="entity-heading programme-entity-heading">
             <div>
               <span className="eyebrow">{programme.subject} · {programme.level}</span>
               <h1>{programme.name}</h1>
@@ -63,7 +63,25 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
                 <Link className="button button-outline" href="/workspace">Save to study plan</Link>
               </div>
             </div>
-            <div className="entity-monogram" style={{ "--accent": programme.accent } as React.CSSProperties}>{programme.levelCode || "PRG"}</div>
+            <div className="programme-hero-art" aria-hidden="true">
+              <div
+                className="entity-monogram programme-level-tile"
+                style={{ "--accent": programme.accent } as React.CSSProperties}
+              >
+                {programme.levelCode || "PRG"}
+              </div>
+
+              <div className="programme-cap-backdrop" />
+
+              <div className="programme-cap-card">
+                <GraduationCap
+                  className="programme-cap-icon"
+                  strokeWidth={2.4}
+                />
+                <span className="programme-cap-blue" />
+                <span className="programme-cap-coral" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
