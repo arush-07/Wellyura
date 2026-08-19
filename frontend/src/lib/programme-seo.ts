@@ -1,4 +1,5 @@
-﻿export const programmeRedirects: Record<string, string> = {
+import { programmeFacultyRedirects } from "@/lib/programme-faculty-redirects";
+export const programmeRedirects: Record<string, string> = {
   "essec-business-school--essec-global-bba--14":
     "essec-business-school--essec-global-bba--1",
 
@@ -53,7 +54,10 @@ export const malformedProgrammeSlugs = new Set<string>([
 ]);
 
 export function getProgrammeRedirect(slug: string) {
-  return programmeRedirects[slug];
+  return (
+    programmeRedirects[slug] ??
+    programmeFacultyRedirects[slug]
+  );
 }
 
 export function isMalformedProgrammeSlug(slug: string) {
