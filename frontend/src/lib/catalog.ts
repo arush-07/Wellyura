@@ -1,3 +1,4 @@
+import { shouldIndexProgrammeSlug } from "@/lib/programme-seo";
 import catalogJson from "@/data/catalog.json";
 
 export type Country = {
@@ -150,6 +151,8 @@ export function searchProgrammes(input: {
 }) {
   const query = input.query?.trim().toLowerCase() ?? "";
   const rows = programmes.filter((programme) => {
+    if (!shouldIndexProgrammeSlug(programme.slug)) return false;
+
     const searchable = [
       programme.name,
       programme.universityName,
@@ -183,6 +186,7 @@ export function topUniversities(limit = 6) {
 
 export function topProgrammes(limit = 8) {
   return programmes
+    .filter((programme) => shouldIndexProgrammeSlug(programme.slug))
     .filter((programme) => programme.annualFeeCad || programme.requirements.length > 0)
     .slice(0, limit);
 }

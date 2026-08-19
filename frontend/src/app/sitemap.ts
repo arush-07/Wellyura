@@ -1,4 +1,5 @@
-﻿import type { MetadataRoute } from "next";
+import { shouldIndexProgrammeSlug } from "@/lib/programme-seo";
+import type { MetadataRoute } from "next";
 
 import { accommodations } from "@/lib/accommodations";
 import {
@@ -11,6 +12,9 @@ import { siteConfig } from "@/lib/site";
 const PROGRAMME_PAGE_SIZE = 48;
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const indexableProgrammes = programmes.filter(
+    (programme) => shouldIndexProgrammeSlug(programme.slug),
+  );
   const staticRoutes = [
     "",
     "/discover",
@@ -38,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * Page 1 is already included as /programmes.
    */
   const programmePageCount = Math.ceil(
-    programmes.length / PROGRAMME_PAGE_SIZE,
+    indexableProgrammes.length / PROGRAMME_PAGE_SIZE,
   );
 
   const programmePaginationPages: MetadataRoute.Sitemap =
@@ -67,7 +71,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
   const programmePages: MetadataRoute.Sitemap =
-    programmes.map((programme) => ({
+    indexableProgrammes.map((programme) => ({
       url: `${siteConfig.url}/programmes/${programme.slug}`,
     }));
 

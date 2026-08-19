@@ -1,7 +1,11 @@
+import {
+  getProgrammeRedirect,
+  isMalformedProgrammeSlug,
+} from "@/lib/programme-seo";
 import { BreadcrumbStructuredData } from "@/components/breadcrumb-structured-data";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, BookOpen, Clock3, GraduationCap, MapPin } from "lucide-react";
 import { DataStatus } from "@/components/data-status";
 import { getProgramme, getUniversity } from "@/lib/catalog";
@@ -14,6 +18,22 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+
+  const redirectSlug = getProgrammeRedirect(slug);
+
+  if (redirectSlug) {
+    return {
+      title: "Programme moved",
+      alternates: {
+        canonical: `/programmes/${redirectSlug}`,
+      },
+      robots: {
+        index: false,
+        follow: true,
+      },
+    };
+  }
+
   const programme = getProgramme(slug);
 
   if (!programme) {
@@ -26,17 +46,36 @@ export async function generateMetadata({
     };
   }
 
+  const malformed = isMalformedProgrammeSlug(slug);
+
   return {
     title: `${programme.name} at ${programme.universityName}`,
     description: `Explore ${programme.name}, a ${programme.level.toLowerCase()} programme at ${programme.universityName}.`,
+
     alternates: {
       canonical: `/programmes/${programme.slug}`,
     },
+
+    robots: malformed
+      ? {
+          index: false,
+          follow: true,
+        }
+      : {
+          index: true,
+          follow: true,
+        },
   };
 }
 
 export default async function ProgrammePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+
+  const redirectSlug = getProgrammeRedirect(slug);
+
+  if (redirectSlug) {
+    permanentRedirect(`/programmes/${redirectSlug}`);
+  }
   const programme = getProgramme(slug);
   if (!programme) notFound();
   const university = getUniversity(programme.universitySlug);
