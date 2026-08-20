@@ -1,4 +1,4 @@
-﻿import type { NextConfig } from "next";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -15,6 +15,19 @@ const nextConfig: NextConfig = {
       {
         source: "/search",
         destination: "/discover",
+        permanent: true,
+      },
+
+      // Legacy UK destination slugs.
+      {
+        source: "/countries/uk",
+        destination: "/countries/united-kingdom",
+        permanent: true,
+      },
+
+      {
+        source: "/country/uk",
+        destination: "/countries/united-kingdom",
         permanent: true,
       },
 
