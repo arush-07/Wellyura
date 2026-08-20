@@ -8,7 +8,6 @@ import { CountryFlag } from "@/components/country-flag";
 import { ProgrammeCard } from "@/components/programme-card";
 import { SaveCompareActions } from "@/components/save-compare-actions";
 import { getUniversity, getUniversityProgrammes } from "@/lib/catalog";
-import { formatCad } from "@/lib/format";
 
 
 export async function generateMetadata({
@@ -79,7 +78,7 @@ export default async function UniversityPage({ params }: { params: Promise<{ slu
       <div className="entity-stat-strip shell">
         <div><span>Location</span><strong>{university.city}, {university.country}</strong></div>
         <div><span>Programme catalogue</span><strong>{university.programCount} programmes</strong></div>
-        <div><span>Legacy annual range</span><strong>{university.annualFeeCadMin ? `${formatCad(university.annualFeeCadMin, true)}–${formatCad(university.annualFeeCadMax, true)}` : "Unavailable"}</strong></div>
+        <div><span>Fee information</span><strong>Being verified</strong></div>
         <div><span>Funding notes</span><strong>{university.scholarships.length || "None listed"}</strong></div>
       </div>
 
@@ -92,7 +91,7 @@ export default async function UniversityPage({ params }: { params: Promise<{ slu
               <div><dt>City</dt><dd>{university.city}</dd></div>
               <div><dt>Region / state</dt><dd>{university.province || "Not available"}</dd></div>
               <div><dt>Campuses</dt><dd>{university.campuses.length ? university.campuses.join(", ") : "Not available"}</dd></div>
-              <div><dt>Application fee</dt><dd>{university.applicationFeeCad ? `${formatCad(university.applicationFeeCad)} legacy CAD value` : "Not available"}</dd></div>
+              <div><dt>Application fee</dt><dd>Verification in progress</dd></div>
             </dl>
           </section>
 

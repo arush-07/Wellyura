@@ -9,7 +9,6 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, BookOpen, Clock3, GraduationCap, MapPin } from "lucide-react";
 import { DataStatus } from "@/components/data-status";
 import { getProgramme, getUniversity } from "@/lib/catalog";
-import { formatCad } from "@/lib/format";
 
 
 export async function generateMetadata({
@@ -129,7 +128,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
         <div><span>Institution</span><strong>{programme.universityName}</strong></div>
         <div><span>Location</span><strong>{programme.city}, {programme.country}</strong></div>
         <div><span>Duration</span><strong>{programme.durationYears ? `${programme.durationYears} years` : "Unavailable"}</strong></div>
-        <div><span>Legacy annual tuition</span><strong>{formatCad(programme.annualFeeCad)}</strong></div>
+        <div><span>Fee information</span><strong>Being verified</strong></div>
       </div>
 
       <div className="shell entity-layout">
@@ -141,8 +140,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
               <div><dt>Subject area</dt><dd>{programme.subject}</dd></div>
               <div><dt>Faculty / school</dt><dd>{programme.faculty || "Not available"}</dd></div>
               <div><dt>Duration</dt><dd>{programme.durationYears ? `${programme.durationYears} years` : "Not available"}</dd></div>
-              <div><dt>Legacy annual tuition</dt><dd>{formatCad(programme.annualFeeCad)}</dd></div>
-              <div><dt>Legacy total tuition</dt><dd>{formatCad(programme.totalFeeCad)}</dd></div>
+              <div><dt>Tuition / fees</dt><dd>Verification in progress</dd></div>
             </dl>
           </section>
 

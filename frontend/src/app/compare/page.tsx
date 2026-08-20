@@ -4,7 +4,6 @@ import Link from "next/link";
 import { GitCompareArrows, Plus, Trash2 } from "lucide-react";
 import universityIndex from "@/data/university-index.json";
 import { CountryFlag } from "@/components/country-flag";
-import { formatCad } from "@/lib/format";
 import { useWorkspaceStore } from "@/lib/workspace-store";
 
 const universityMap = new Map(universityIndex.map((item) => [item.id, item]));
@@ -13,7 +12,7 @@ const rows = [
   ["Location", (item: (typeof universityIndex)[number]) => `${item.city}, ${item.country}`],
   ["Institution type", (item: (typeof universityIndex)[number]) => item.type],
   ["Programmes", (item: (typeof universityIndex)[number]) => item.programCount.toLocaleString()],
-  ["Legacy fee range", (item: (typeof universityIndex)[number]) => item.annualFeeCadMin ? `${formatCad(item.annualFeeCadMin, true)}–${formatCad(item.annualFeeCadMax, true)}` : "Unavailable"],
+  ["Fee information", (_item: (typeof universityIndex)[number]) => "Being verified"],
   ["Typical intakes", (item: (typeof universityIndex)[number]) => item.intakes.slice(0, 3).join(", ") || "Unavailable"],
   ["Funding notes", (item: (typeof universityIndex)[number]) => String(item.scholarships.length)],
 ] as const;

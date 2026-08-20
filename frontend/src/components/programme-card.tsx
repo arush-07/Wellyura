@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock3, MapPin } from "lucide-react";
 import type { Programme } from "@/lib/catalog";
-import { formatCad } from "@/lib/format";
 import { DataStatus } from "@/components/data-status";
 
 export function ProgrammeCard({ programme }: { programme: Programme }) {
@@ -21,8 +20,8 @@ export function ProgrammeCard({ programme }: { programme: Programme }) {
         </div>
       </div>
       <div className="programme-card-side">
-        <span>Legacy annual tuition</span>
-        <strong>{formatCad(programme.annualFeeCad)}</strong>
+        <span>Fee information</span>
+        <strong>Being verified</strong>
         <DataStatus compact />
         <Link className="round-link" href={`/programmes/${programme.slug}`} aria-label={`View ${programme.name}`}>
           <ArrowUpRight size={18} />

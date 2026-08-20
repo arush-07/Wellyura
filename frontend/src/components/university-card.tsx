@@ -7,7 +7,6 @@ export type UniversityCardData = Pick<University,
   "id" | "slug" | "name" | "flag" | "country" | "countrySlug" | "city" | "province" |
   "accent" | "programCount" | "scholarships" | "annualFeeCadMin" | "annualFeeCadMax"
 >;
-import { formatCad } from "@/lib/format";
 import { DataStatus } from "@/components/data-status";
 import { SaveCompareActions } from "@/components/save-compare-actions";
 
@@ -28,12 +27,8 @@ export function UniversityCard({ university, variant = "default" }: { university
         <div><Sparkles size={16} /><span><strong>{university.scholarships.length}</strong> funding notes</span></div>
       </div>
       <div className="fee-line">
-        <span>Legacy annual fee range</span>
-        <strong>
-          {university.annualFeeCadMin
-            ? `${formatCad(university.annualFeeCadMin, true)}${university.annualFeeCadMax && university.annualFeeCadMax !== university.annualFeeCadMin ? `–${formatCad(university.annualFeeCadMax, true)}` : ""}`
-            : "Not available"}
-        </strong>
+        <span>Fee information</span>
+        <strong>Being verified</strong>
       </div>
       <div className="university-card-foot">
         <DataStatus compact />
