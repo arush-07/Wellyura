@@ -26,7 +26,7 @@ import { countries, subjects, topProgrammes, topUniversities } from "@/lib/catal
 const journey = [
   { icon: Compass, number: "01", title: "Discover", copy: "Start with a subject, destination, budget or simply an ambition." },
   { icon: BookMarked, number: "02", title: "Shortlist", copy: "Collect universities and programmes into a plan that makes sense." },
-  { icon: GitCompareArrows, number: "03", title: "Compare", copy: "See the real differences in tuition, intakes, requirements and location." },
+  { icon: GitCompareArrows, number: "03", title: "Compare", copy: "See the key differences in tuition context, intakes, requirements and location." },
   { icon: GraduationCap, number: "04", title: "Move forward", copy: "Turn research into a practical timeline for your next step." },
 ];
 
@@ -43,7 +43,7 @@ export default function HomePage() {
             <span className="eyebrow">Global study decisions, made clearer</span>
             <h1>Your future is<br /><em>global.</em></h1>
             <p>
-              Search programmes, compare real costs, save your strongest options and turn scattered study-abroad research into one clear plan.
+              Search programmes, compare study options and fee context, save your strongest choices and turn scattered study-abroad research into one clear plan.
             </p>
             <form className="hero-search" action="/discover">
               <Search size={21} />
