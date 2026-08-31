@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   FormEvent,
@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { countries } from "@/lib/catalog";
 import { createClient } from "@/lib/supabase/client";
 
-export function RegisterForm() {
+export function RegisterForm({ nextPath }: { nextPath: string }) {
   const router = useRouter();
 
   const [fullName, setFullName] =
@@ -199,7 +199,7 @@ export function RegisterForm() {
         throw error;
       }
 
-      router.replace("/workspace");
+      router.replace(nextPath);
       router.refresh();
     } catch (error) {
       showError(
@@ -233,8 +233,9 @@ export function RegisterForm() {
       </h1>
 
       <p>
-        Create your account using your
-        email address.
+        Create your account, save your choices and keep
+        your study research in one place. No credit card
+        is required to create your account.
       </p>
 
       <div className="form-stack">
@@ -281,7 +282,7 @@ export function RegisterForm() {
 
         <div className="form-row">
           <label htmlFor="country">
-            Destination interest
+            Destination interest (optional)
           </label>
 
           <select
@@ -353,7 +354,7 @@ export function RegisterForm() {
             >
               {loading
                 ? "Verifying..."
-                : "Verify & create account"}
+                : "Verify & continue"}
             </button>
 
             <button
@@ -411,7 +412,7 @@ export function RegisterForm() {
 
       <p className="auth-switch">
         Already registered?{" "}
-        <Link href="/login">
+        <Link href={`/login?next=${encodeURIComponent(nextPath)}`}>
           Sign in
         </Link>
       </p>

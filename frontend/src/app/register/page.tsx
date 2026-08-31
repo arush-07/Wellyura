@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AuthMotion } from "@/components/auth-motion";
 import { RegisterForm } from "@/components/register-form";
+import { safeAuthNext } from "@/lib/auth-next";
 
 export const metadata: Metadata = {
   title: "Create account",
@@ -10,7 +11,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RegisterPage() {
+type SearchParams =
+  Promise<Record<string, string | string[] | undefined>>;
+
+export default async function RegisterPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+
+  const nextPath =
+    safeAuthNext(params.next);
+
   return (
     <section className="auth-page auth-page-register">
       <div className="auth-art">
@@ -27,7 +40,7 @@ export default function RegisterPage() {
       </div>
 
       <div className="auth-form-wrap">
-        <RegisterForm />
+        <RegisterForm nextPath={nextPath} />
       </div>
     </section>
   );

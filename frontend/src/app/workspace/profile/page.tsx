@@ -1,15 +1,18 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 import { ProfileLoader } from "@/components/profile-loader";
 import { WorkspaceNav } from "@/components/workspace-nav";
-import { createClient } from "@/lib/supabase/server";
+import { requireWorkspaceUser } from "@/lib/supabase/require-workspace-user";
 
 export const metadata: Metadata = {
   title: "Profile",
 };
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
+  const { supabase } =
+    await requireWorkspaceUser(
+      "/workspace/profile",
+    );
 
   const { data: countries } =
     await supabase

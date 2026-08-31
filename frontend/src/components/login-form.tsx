@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   FormEvent,
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
 
-export function LoginForm() {
+export function LoginForm({ nextPath }: { nextPath: string }) {
   const router = useRouter();
 
   const [email, setEmail] =
@@ -178,7 +178,7 @@ export function LoginForm() {
         throw error;
       }
 
-      router.replace("/workspace");
+      router.replace(nextPath);
       router.refresh();
     } catch (error) {
       showError(
@@ -325,7 +325,7 @@ export function LoginForm() {
 
       <p className="auth-switch">
         New to Wellyura?{" "}
-        <Link href="/register">
+        <Link href={`/register?next=${encodeURIComponent(nextPath)}`}>
           Create an account
         </Link>
       </p>

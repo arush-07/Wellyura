@@ -1,4 +1,4 @@
-﻿import type {
+import type {
   Metadata,
 } from "next";
 
@@ -12,19 +12,20 @@ import {
 } from "@/components/workspace-nav";
 
 import {
-  createClient,
-} from "@/lib/supabase/server";
+  requireWorkspaceUser,
+} from "@/lib/supabase/require-workspace-user";
 
 export const metadata: Metadata = {
   title: "Search history",
 };
 
 export default async function SearchesPage() {
-  const supabase = await createClient();
-
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    supabase,
+    user,
+  } = await requireWorkspaceUser(
+    "/workspace/searches",
+  );
 
   const {
     data,
@@ -36,7 +37,7 @@ export default async function SearchesPage() {
     )
     .eq(
       "user_id",
-      user!.id,
+      user.id,
     )
     .order(
       "created_at",

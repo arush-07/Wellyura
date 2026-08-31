@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AuthMotion } from "@/components/auth-motion";
 import { LoginForm } from "@/components/login-form";
+import { safeAuthNext } from "@/lib/auth-next";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -10,7 +11,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LoginPage() {
+type SearchParams =
+  Promise<Record<string, string | string[] | undefined>>;
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+
+  const nextPath =
+    safeAuthNext(params.next);
+
   return (
     <section className="auth-page">
       <div className="auth-art">
@@ -27,7 +40,7 @@ export default function LoginPage() {
       </div>
 
       <div className="auth-form-wrap">
-        <LoginForm />
+        <LoginForm nextPath={nextPath} />
       </div>
     </section>
   );

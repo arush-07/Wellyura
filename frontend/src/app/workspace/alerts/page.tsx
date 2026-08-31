@@ -1,7 +1,7 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { WorkspaceNav } from "@/components/workspace-nav";
 import { AlertPreferences } from "@/components/alert-preferences";
-import { createClient } from "@/lib/supabase/server";
+import { requireWorkspaceUser } from "@/lib/supabase/require-workspace-user";
 
 export const metadata: Metadata = { title: "Alerts" };
 
@@ -13,13 +13,15 @@ const defaults = {
 };
 
 export default async function AlertsPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { supabase, user } =
+    await requireWorkspaceUser(
+      "/workspace/alerts",
+    );
 
   const { data: preferences } = await supabase
     .from("user_alert_preferences")
     .select("deadline_reminders, scholarship_updates, programme_updates, email_notifications")
-    .eq("user_id", user!.id)
+    .eq("user_id", user.id)
     .maybeSingle();
 
   return (
