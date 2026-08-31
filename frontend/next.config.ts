@@ -31,6 +31,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
+      // Legacy malformed Hanseo university URL.
+      {
+        source: "/universities/www.graduate.hanseo.ac.kr",
+        destination: "/universities/hanseo-university-south-korea",
+        permanent: true,
+      },
+
       // Legacy nested university URLs.
       {
         source: "/country/:country/university/:slug",

@@ -65,7 +65,7 @@ export default async function UniversityPage({ params }: { params: Promise<{ slu
               <div className="entity-actions">
                 <SaveCompareActions universityId={university.id} />
                 <Link className="button button-dark" href="#programmes">Explore programmes</Link>
-                {university.website && <a className="button button-outline" href={university.website} rel="noreferrer" target="_blank">Official website <ArrowUpRight size={17} /></a>}
+                {university.website && <a className="button button-outline" href={/^https?:\/\//i.test(university.website.trim()) ? university.website.trim() : `https://${university.website.trim().replace(/^\/+/, "")}`} rel="noreferrer" target="_blank">Official website <ArrowUpRight size={17} /></a>}
               </div>
             </div>
             <div className="entity-monogram" style={{ "--accent": university.accent } as React.CSSProperties}>
