@@ -38,6 +38,31 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
+      // Legacy malformed university slugs.
+      {
+        source: "/country/usa/university/university-of-maryland-college-park-comprehensive-international-student-guide",
+        destination: "/universities/university-of-maryland-college-park",
+        permanent: true,
+      },
+
+      {
+        source: "/universities/university-of-maryland-college-park-comprehensive-international-student-guide",
+        destination: "/universities/university-of-maryland-college-park",
+        permanent: true,
+      },
+
+      {
+        source: "/country/france/university/universit-grenoble-alpes",
+        destination: "/universities/universite-grenoble-alpes",
+        permanent: true,
+      },
+
+      {
+        source: "/universities/universit-grenoble-alpes",
+        destination: "/universities/universite-grenoble-alpes",
+        permanent: true,
+      },
+
       // Legacy nested university URLs.
       {
         source: "/country/:country/university/:slug",
