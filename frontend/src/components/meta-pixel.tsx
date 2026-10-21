@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import {
   usePathname,
   useSearchParams,
@@ -25,9 +26,13 @@ type MetaFbq = ((
   callMethod?: (
     ...args: unknown[]
   ) => void;
+
   queue: unknown[][];
+
   loaded: boolean;
+
   version: string;
+
   push: (
     ...args: unknown[]
   ) => void;
@@ -43,7 +48,8 @@ declare global {
 function getCookieConsent():
   ConsentChoice {
   if (
-    typeof document === "undefined"
+    typeof document ===
+    "undefined"
   ) {
     return null;
   }
@@ -62,7 +68,8 @@ function getCookieConsent():
   }
 
   const value =
-    consentCookie.split("=")[1];
+    consentCookie
+      .split("=")[1];
 
   if (
     value === "accepted" ||
@@ -85,7 +92,10 @@ function initialiseMetaPixel(
     ...args: unknown[]
   ) {
     if (fbq.callMethod) {
-      fbq.callMethod(...args);
+      fbq.callMethod(
+        ...args,
+      );
+
       return;
     }
 
@@ -93,11 +103,15 @@ function initialiseMetaPixel(
   } as MetaFbq;
 
   fbq.queue = [];
+
   fbq.loaded = true;
+
   fbq.version = "2.0";
+
   fbq.push = fbq;
 
   window.fbq = fbq;
+
   window._fbq = fbq;
 
   if (
@@ -131,8 +145,52 @@ function initialiseMetaPixel(
   return fbq;
 }
 
+function createEventId() {
+  return [
+    "pv",
+    Date.now(),
+    crypto.randomUUID(),
+  ].join("_");
+}
+
+function sendServerEvent(
+  eventId: string,
+) {
+  void fetch(
+    "/api/meta/events",
+    {
+      method: "POST",
+
+      credentials:
+        "same-origin",
+
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+
+      body: JSON.stringify({
+        eventName:
+          "PageView",
+
+        eventId,
+
+        eventSourceUrl:
+          window.location.href,
+      }),
+
+      keepalive: true,
+    },
+  ).catch(() => {
+    // Browser tracking should continue
+    // even if the server event fails.
+  });
+}
+
 export function MetaPixel() {
-  const pathname = usePathname();
+  const pathname =
+    usePathname();
+
   const searchParams =
     useSearchParams();
 
@@ -140,11 +198,18 @@ export function MetaPixel() {
     process.env
       .NEXT_PUBLIC_META_PIXEL_ID;
 
-  const [consent, setConsent] =
-    useState<ConsentChoice>(null);
+  const [
+    consent,
+    setConsent,
+  ] =
+    useState<ConsentChoice>(
+      null,
+    );
 
   const lastTrackedUrl =
-    useRef<string | null>(null);
+    useRef<string | null>(
+      null,
+    );
 
   const routeKey =
     useMemo(() => {
@@ -169,7 +234,8 @@ export function MetaPixel() {
     ) {
       const customEvent =
         event as CustomEvent<{
-          choice?: ConsentChoice;
+          choice?:
+            ConsentChoice;
         }>;
 
       const choice =
@@ -179,7 +245,8 @@ export function MetaPixel() {
       setConsent(choice);
 
       if (
-        choice === "rejected"
+        choice ===
+        "rejected"
       ) {
         lastTrackedUrl.current =
           null;
@@ -207,11 +274,6 @@ export function MetaPixel() {
       return;
     }
 
-    const fbq =
-      initialiseMetaPixel(
-        pixelId,
-      );
-
     if (
       lastTrackedUrl.current ===
       routeKey
@@ -219,9 +281,26 @@ export function MetaPixel() {
       return;
     }
 
+    const eventId =
+      createEventId();
+
+    const fbq =
+      initialiseMetaPixel(
+        pixelId,
+      );
+
     fbq(
       "track",
       "PageView",
+      {},
+      {
+        eventID:
+          eventId,
+      },
+    );
+
+    sendServerEvent(
+      eventId,
     );
 
     lastTrackedUrl.current =

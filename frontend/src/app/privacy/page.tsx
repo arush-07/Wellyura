@@ -38,27 +38,38 @@ export default function PrivacyPage() {
       </p>
 
       <h2>
-        Cookies and Meta Pixel
+        Cookies, Meta Pixel and
+        Conversions API
       </h2>
 
       <p>
         Wellyura uses essential cookies for
         core functionality such as account
-        sessions. Optional cookies are used
-        only after you accept them.
+        sessions. Optional measurement and
+        advertising technologies are used
+        only after you accept optional
+        cookies.
       </p>
 
       <p>
         If you accept optional cookies,
-        Wellyura may use Meta Pixel, provided
-        by Meta Platforms, to understand
-        website visits and measure the
-        effectiveness of advertising. This
-        may involve information such as page
-        visits, browser or device information,
-        referring pages and identifiers used
-        by Meta for measurement and
-        advertising services.
+        Wellyura may use Meta Pixel and
+        Meta Conversions API to understand
+        website visits and measure
+        advertising effectiveness.
+      </p>
+
+      <p>
+        Depending on the event, information
+        sent for measurement may include the
+        page visited, event time, browser or
+        device information, IP address,
+        referral or advertising identifiers,
+        and identifiers stored by Meta
+        technologies. Browser and server
+        events may use matching event IDs so
+        Meta can identify duplicate reports
+        of the same interaction.
       </p>
 
       <h2>

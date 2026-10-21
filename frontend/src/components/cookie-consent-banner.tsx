@@ -118,7 +118,7 @@ export function CookieConsentBanner() {
             Wellyura uses essential cookies
             to keep your account signed in.
             With your permission, we also use
-            optional cookies and Meta Pixel to
+            optional cookies and Meta measurement tools to
             measure visits and advertising
             performance. You can accept or
             reject optional cookies now.
