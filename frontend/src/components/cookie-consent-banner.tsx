@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useEffect,
@@ -7,7 +7,7 @@ import {
 import Link from "next/link";
 
 const COOKIE_NAME =
-  "wellyura_cookie_consent";
+  "wellyura_cookie_consent_v2";
 
 const COOKIE_MAX_AGE =
   60 * 60 * 24 * 180;
@@ -117,9 +117,10 @@ export function CookieConsentBanner() {
           <p>
             Wellyura uses essential cookies
             to keep your account signed in.
-            We may also use optional cookies
-            later to improve the website
-            experience. You can accept or
+            With your permission, we also use
+            optional cookies and Meta Pixel to
+            measure visits and advertising
+            performance. You can accept or
             reject optional cookies now.
           </p>
 

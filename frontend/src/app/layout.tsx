@@ -1,4 +1,6 @@
-﻿import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { Suspense } from "react";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { MetaPixel } from "@/components/meta-pixel";
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppChrome } from "@/components/app-chrome";
@@ -63,6 +65,9 @@ export default function RootLayout({
       <body>
         <AppChrome>
           {children}
+          <Suspense fallback={null}>
+            <MetaPixel />
+          </Suspense>
           <CookieConsentBanner />
         </AppChrome>
       </body>
