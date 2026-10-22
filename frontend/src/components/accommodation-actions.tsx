@@ -1,4 +1,8 @@
-﻿"use client";
+"use client";
+
+import {
+  trackMetaConversion,
+} from "@/lib/meta-conversions";
 
 import type { FormEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -161,6 +165,10 @@ export function AccommodationActions({
           checkOutDate,
           message,
         },
+      );
+
+      trackMetaConversion(
+        "Lead",
       );
 
       setRoomType("");

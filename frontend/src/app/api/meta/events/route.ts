@@ -14,6 +14,8 @@ const GRAPH_API_VERSION =
 const ALLOWED_EVENTS =
   new Set([
     "PageView",
+    "Lead",
+    "CompleteRegistration",
   ]);
 
 type EventRequest = {

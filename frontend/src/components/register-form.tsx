@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  trackMetaConversion,
+} from "@/lib/meta-conversions";
+
+import {
   FormEvent,
   useEffect,
   useState,
@@ -198,6 +202,10 @@ export function RegisterForm({ nextPath }: { nextPath: string }) {
       if (error) {
         throw error;
       }
+
+      trackMetaConversion(
+        "CompleteRegistration",
+      );
 
       router.replace(nextPath);
       router.refresh();
