@@ -5,8 +5,8 @@ import { countries } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/countries" },
-  title: "Study destinations",
-  description: "Explore Wellyura's study-abroad destinations, universities and programmes by country.",
+  title: "Study Abroad Destinations: Countries, Universities & Programmes",
+  description: "Explore study abroad destinations by country. Compare universities, programmes, cities and study options across Wellyura's international catalogue.",
 };
 
 export default function CountriesPage() {
@@ -17,7 +17,7 @@ export default function CountriesPage() {
     <>
       <section className="page-hero destination-page-hero">
         <div className="shell page-hero-grid">
-          <div><span className="eyebrow">Study destinations</span><h1>See the world.<br /><em>Choose with context.</em></h1></div>
+          <div><span className="eyebrow">Study destinations</span><h1>Explore study abroad<br /><em>destinations.</em></h1></div>
           <div>
             <p>Explore destinations through programmes, institutions, cities and real decision context—not just rankings or postcard impressions.</p>
             <div className="destination-proof">

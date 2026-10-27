@@ -5,9 +5,9 @@ import { accommodations } from "@/lib/accommodations";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/accommodation" },
-  title: "Student accommodation",
+  title: "Student Accommodation Abroad: Housing Near Universities",
   description:
-    "Explore curated student stays connected to university destinations.",
+    "Explore student accommodation near universities and study destinations. Compare location, cost, amenities and campus commute context with Wellyura.",
 };
 
 export default function AccommodationPage() {
@@ -21,9 +21,9 @@ export default function AccommodationPage() {
             </span>
 
             <h1>
-              Find a place
+              Find student accommodation
               <br />
-              <em>near the plan.</em>
+              <em>abroad.</em>
             </h1>
           </div>
 

@@ -45,11 +45,11 @@ export async function generateMetadata({
   return {
     title:
       page > 1 && !hasFilters
-        ? `Programmes - Page ${page}`
-        : "Programmes",
+        ? `Study Abroad Programmes - Page ${page}`
+        : "Study Abroad Programmes: Undergraduate & Postgraduate",
 
     description:
-      "Explore undergraduate and postgraduate programmes across Wellyura's global catalogue.",
+      "Explore undergraduate and postgraduate study abroad programmes across universities and destinations worldwide. Compare subjects, levels and study options with Wellyura.",
 
     alternates: {
       canonical:
@@ -149,9 +149,9 @@ export default async function ProgrammesPage({
             </span>
 
             <h1>
-              Study what
+              Explore study abroad
               <br />
-              <em>moves you.</em>
+              <em>programmes.</em>
             </h1>
           </div>
 

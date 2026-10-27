@@ -29,8 +29,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: university.name,
-    description: `Explore programmes, legacy tuition data, intakes and scholarship notes for ${university.name} in ${university.city}, ${university.country}.`,
+    title: `${university.name}: Programmes, Intakes & Study Information`,
+    description: `Explore programmes, intakes, location and funding information for ${university.name} in ${university.city}, ${university.country}. Compare study options with Wellyura.`,
     alternates: {
       canonical: `/universities/${university.slug}`,
     },

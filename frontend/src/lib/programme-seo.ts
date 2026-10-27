@@ -67,3 +67,45 @@ export function isMalformedProgrammeSlug(slug: string) {
 export function shouldIndexProgrammeSlug(slug: string) {
   return !getProgrammeRedirect(slug) && !isMalformedProgrammeSlug(slug);
 }
+
+
+export function isClearlyNonProgrammeName(name: string) {
+  const cleanName = name.trim();
+
+  if (!cleanName) {
+    return true;
+  }
+
+  const badPatterns = [
+    /^application process(?:\s*\(brief\))?$/i,
+    /^most popular courses among indian students$/i,
+    /^\d+(?:\.\d+)?%\s+/i,
+    /\boffers? were school-facilitated\b/i,
+    /\bgraduates? started their own businesses\b/i,
+    /\breturned to pre-mba\b/i,
+    /\bemployed within\b/i,
+    /\bfind jobs within\b/i,
+    /\bprogram tuition only\b/i,
+    /\btotal \(with living costs\)\b/i,
+    /^\d+(?:[.\-?]\d+)?\s*years?\s+full-time/i,
+    /^\d+(?:[.\-?]\d+)?\s*years?\s*\([^)]*\)\s*\|/i,
+    /^\d+(?:[.\-?]\d+)?-year programme\s*\(/i,
+    /^\d+(?:[.\-?]\d+)?\s*years?\s*\([^)]*\)\s*$/i,
+    /^\d+(?:[.\-?]\d+)?\s*years?\s*\|\s*full-time/i,
+  ];
+
+  return badPatterns.some((pattern) =>
+    pattern.test(cleanName),
+  );
+}
+
+export function shouldIndexProgramme(
+  slug: string,
+  name: string,
+) {
+  return (
+    !getProgrammeRedirect(slug) &&
+    !isMalformedProgrammeSlug(slug) &&
+    !isClearlyNonProgrammeName(name)
+  );
+}

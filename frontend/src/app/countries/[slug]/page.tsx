@@ -27,8 +27,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `Study in ${country.name}`,
-    description: `Explore universities and programmes in ${country.name} with Wellyura.`,
+    title: `Study in ${country.name}: Universities & Programmes`,
+    description: `Study in ${country.name} with Wellyura. Explore universities, programmes, study cities and options across ${country.name}.`,
     alternates: {
       canonical: `/countries/${country.slug}`,
     },

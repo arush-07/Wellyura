@@ -1,6 +1,7 @@
 import {
   getProgrammeRedirect,
   isMalformedProgrammeSlug,
+  shouldIndexProgramme,
 } from "@/lib/programme-seo";
 import { BreadcrumbStructuredData } from "@/components/breadcrumb-structured-data";
 import type { Metadata } from "next";
@@ -45,17 +46,22 @@ export async function generateMetadata({
     };
   }
 
-  const malformed = isMalformedProgrammeSlug(slug);
+  const university = getUniversity(programme.universitySlug);
+  const location = university
+    ? ` in ${university.city}, ${university.country}`
+    : "";
+
+  const indexable = shouldIndexProgramme(slug, programme.name);
 
   return {
     title: `${programme.name} at ${programme.universityName}`,
-    description: `Explore ${programme.name}, a ${programme.level.toLowerCase()} programme at ${programme.universityName}.`,
+    description: `Explore ${programme.name} at ${programme.universityName}${location}. Review ${programme.level.toLowerCase()} study details, intakes, requirements and available fee information.`,
 
     alternates: {
       canonical: `/programmes/${programme.slug}`,
     },
 
-    robots: malformed
+    robots: !indexable
       ? {
           index: false,
           follow: true,
@@ -95,7 +101,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
             <div>
               <span className="eyebrow">{programme.subject} · {programme.level}</span>
               <h1>{programme.name}</h1>
-              <p>Explore the available legacy programme information, then verify current tuition, requirements and intake dates with the institution before applying.</p>
+              <p>Review programme details, available fee information, requirements and intake dates, then confirm the latest information with the university before applying.</p>
               <div className="entity-actions">
                 <Link className="button button-dark" href={`/universities/${programme.universitySlug}`}>View university <ArrowRight size={17} /></Link>
                 <Link className="button button-outline" href="/workspace">Save to study plan</Link>

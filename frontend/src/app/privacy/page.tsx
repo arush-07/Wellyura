@@ -3,7 +3,14 @@ import type {
 } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy policy",
+  title: "Privacy Policy",
+  alternates: {
+    canonical: "/privacy",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function PrivacyPage() {

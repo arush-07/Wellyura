@@ -41,9 +41,9 @@ export default function HomePage() {
         <div className="hero-grid shell">
           <div className="hero-copy">
             <span className="eyebrow">Global study decisions, made clearer</span>
-            <h1>Your future is<br /><em>global.</em></h1>
+            <h1>Study abroad.<br /><em>Made clearer.</em></h1>
             <p>
-              Search programmes, compare study options and fee context, save your strongest choices and turn scattered study-abroad research into one clear plan.
+              Explore universities, compare programmes and study destinations, find student accommodation, and turn your study-abroad research into one clear plan.
             </p>
             <form className="hero-search" action="/discover">
               <Search size={21} />

@@ -50,8 +50,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: stay.name,
-    description: stay.description,
+    title: `${stay.name}: Student Accommodation in ${stay.city}`,
+    description: `${stay.description} Explore this ${stay.type.toLowerCase()} student accommodation in ${stay.city} with location, amenities and housing details on Wellyura.`,
     alternates: {
       canonical: `/accommodation/${stay.slug}`,
     },

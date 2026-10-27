@@ -3,16 +3,40 @@ import { Search } from "lucide-react";
 import { UniversityCard } from "@/components/university-card";
 import { countries, searchUniversities } from "@/lib/catalog";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/discover" },
-  title: "Discover universities",
-  description: "Discover international universities by destination, city and institution name.",
-};
-
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 function value(input: string | string[] | undefined) {
   return typeof input === "string" ? input : "";
+}
+
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const query = value(params.q);
+  const country = value(params.country);
+  const hasFilters = Boolean(query || country);
+
+  return {
+    alternates: {
+      canonical: "/discover",
+    },
+    title: "Discover Universities Abroad",
+    description:
+      "Discover international universities by destination, city and institution name. Explore programmes, locations and study options with Wellyura.",
+    robots: hasFilters
+      ? {
+          index: false,
+          follow: true,
+        }
+      : {
+          index: true,
+          follow: true,
+        },
+  };
 }
 
 export default async function DiscoverPage({ searchParams }: { searchParams: SearchParams }) {
@@ -27,7 +51,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Sea
         <div className="shell page-hero-grid">
           <div>
             <span className="eyebrow">Discover</span>
-            <h1>Search less.<br /><em>See more.</em></h1>
+            <h1>Discover universities<br /><em>abroad.</em></h1>
           </div>
           <div>
             <p>Explore universities by institution, city or destination. Open any university to view its programmes, funding notes and fee context.</p>

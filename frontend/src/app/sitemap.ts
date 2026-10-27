@@ -1,4 +1,4 @@
-import { shouldIndexProgrammeSlug } from "@/lib/programme-seo";
+import { shouldIndexProgramme } from "@/lib/programme-seo";
 import type { MetadataRoute } from "next";
 
 import { accommodations } from "@/lib/accommodations";
@@ -13,7 +13,7 @@ const PROGRAMME_PAGE_SIZE = 48;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const indexableProgrammes = programmes.filter(
-    (programme) => shouldIndexProgrammeSlug(programme.slug),
+    (programme) => shouldIndexProgramme(programme.slug, programme.name),
   );
   const staticRoutes = [
     "",

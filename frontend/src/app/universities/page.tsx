@@ -5,8 +5,8 @@ import { countries, searchUniversities, universities } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/universities" },
-  title: "Universities",
-  description: "Explore international universities and colleges across 12 study destinations.",
+  title: "Universities Abroad: Compare International Universities",
+  description: "Explore international universities and colleges across 12 study destinations. Compare programmes, locations, intakes and funding context with Wellyura.",
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -47,9 +47,9 @@ export default async function UniversitiesPage({ searchParams }: { searchParams:
           <div>
             <span className="eyebrow">University catalogue</span>
             <h1>
-              Open the
+              Explore universities
               <br />
-              <em>right doors.</em>
+              <em>abroad.</em>
             </h1>
           </div>
           <div>
