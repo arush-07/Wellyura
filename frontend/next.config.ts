@@ -63,6 +63,37 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
+      // Legacy SEO redirects from old Wellyura URLs.
+      {
+        source: "/country/usa",
+        destination: "/countries/united-states",
+        permanent: true,
+      },
+
+      {
+        source: "/universities/tum",
+        destination: "/universities/technical-university-of-munich",
+        permanent: true,
+      },
+
+      {
+        source: "/universities/stanford",
+        destination: "/universities/stanford-university",
+        permanent: true,
+      },
+
+      {
+        source: "/country/france/university/cole-des-ponts",
+        destination: "/universities/ecole-des-ponts",
+        permanent: true,
+      },
+
+      {
+        source: "/country/france/university/universit-psl",
+        destination: "/universities/universite-psl",
+        permanent: true,
+      },
+
       // Legacy nested university URLs.
       {
         source: "/country/:country/university/:slug",
