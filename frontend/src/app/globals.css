@@ -5185,3 +5185,11 @@ html {
     bottom: 10px !important;
   }
 }
+
+
+/* Keep Accommodation visible in mobile navigation */
+@media (max-width: 760px) {
+  .site-header .mobile-menu nav a[href="/accommodation"] {
+    display: block !important;
+  }
+}
