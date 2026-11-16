@@ -3865,9 +3865,7 @@ a[href="https://wellyura.com/scholarships"] {
 
 /* Force remove Scholarships from mobile menu */
 @media (max-width: 760px) {
-  .mobile-menu nav > :nth-child(5) {
-    display: none !important;
-  }
+  
 }
 
 /* Final force-remove Scholarships from mobile menu */
@@ -5187,9 +5185,26 @@ html {
 }
 
 
-/* Keep Accommodation visible in mobile navigation */
+
+
+
+/* Clean mobile navigation */
 @media (max-width: 760px) {
-  .site-header .mobile-menu nav a[href="/accommodation"] {
-    display: block !important;
+  .site-header .mobile-menu nav {
+    display: grid !important;
+    width: min(100%, 320px) !important;
+    margin: 0 auto !important;
+  }
+
+  .site-header .mobile-menu nav a {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .site-header .mobile-menu nav a[href="/scholarships"],
+  .site-header .mobile-menu nav a[href="/compare"] {
+    display: none !important;
   }
 }
